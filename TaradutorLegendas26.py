@@ -25,7 +25,7 @@ MKVEXTRACT_EXE   = os.path.join(MKVTOOLNIX_PATH, "mkvextract.exe")
 padrao_dialogo = re.compile(r'(Dialogue:.*,,)(.*)')
 
 def extrair_legenda_mkv(caminho_mkv, pasta_destino):
-    """Lê o arquivo MKV usando mkvmerge, identifica a primeira legenda ASS e a extrai."""
+    """Lê o arquivo MKV usando mkvmerge, identifica a legenda ASS e a extrai."""
     tqdm.write(f"\nAnalisando MKV: {os.path.basename(caminho_mkv)}")
     
     comando_info = [MKVMERGE_EXE, "-J", caminho_mkv]
@@ -38,11 +38,9 @@ def extrair_legenda_mkv(caminho_mkv, pasta_destino):
     track_id = None
     for track in info.get("tracks", []):
         if track.get("type") == "subtitles":
-            # Captura tanto o nome genérico do codec quanto o codec_id oficial dentro de properties
             codec = track.get("codec", "").lower()
             codec_id = track.get("properties", {}).get("codec_id", "").lower()
             
-            # Verifica as possíveis nomenclaturas para SubStation Alpha (.ass)
             if "ass" in codec or "substation" in codec or "s_text/ass" in codec_id:
                 track_id = track["id"]
                 break
@@ -59,43 +57,33 @@ def extrair_legenda_mkv(caminho_mkv, pasta_destino):
     
     return caminho_ass
 
-    """Lê o arquivo MKV usando mkvmerge, identifica a primeira legenda ASS e a extrai."""
-    tqdm.write(f"\nAnalisando MKV: {os.path.basename(caminho_mkv)}")
+def embutir_legenda_mkv(caminho_mkv_original, caminho_ass_traduzido, pasta_destino):
+    """Mescla o vídeo original com a nova legenda traduzida em um novo arquivo MKV."""
+    nome_saida = os.path.basename(caminho_mkv_original).rsplit('.', 1)[0] + "_PTBR.mkv"
+    caminho_saida = os.path.join(pasta_destino, nome_saida)
     
-    # 1. Mapeia a estrutura de trilhas do arquivo de vídeo (Retorna formato JSON)
-    comando_info = [MKVMERGE_EXE, "-J", caminho_mkv]
+    tqdm.write(f"\nCriando novo contêiner MKV com a legenda embutida: {nome_saida}")
+    
+    comando_mux = [
+        MKVMERGE_EXE,
+        "-o", caminho_saida,
+        caminho_mkv_original,
+        "--language", "0:por",
+        "--track-name", "0:Português (Brasil)",
+        caminho_ass_traduzido
+    ]
+    
     try:
-        resultado = subprocess.run(comando_info, capture_output=True, text=True, check=True, encoding='utf-8')
-        info = json.loads(resultado.stdout)
+        subprocess.run(comando_mux, check=True, capture_output=True)
+        tqdm.write(f"Novo arquivo de vídeo gerado com sucesso.")
+        return caminho_saida
     except Exception as e:
-        raise RuntimeError(f"Erro ao ler MKV (Verifique se o MKVToolNix está instalado em {MKVTOOLNIX_PATH}): {e}")
-
-    # 2. Varre as trilhas procurando por uma legenda do tipo ASS
-    track_id = None
-    for track in info.get("tracks", []):
-        if track["type"] == "subtitles" and "ass" in track["codec"].lower():
-            track_id = track["id"]
-            break
-
-    if track_id is None:
-        raise ValueError("Nenhuma legenda no formato .ass foi encontrada embutida neste MKV.")
-
-    # 3. Define o nome temporário para a legenda que será extraída
-    nome_ass = os.path.basename(caminho_mkv).rsplit('.', 1)[0] + "_ORIGINAL.ass"
-    caminho_ass = os.path.join(pasta_destino, nome_ass)
-
-    # 4. Executa a extração em segundo plano via mkvextract
-    tqdm.write(f"Extraindo trilha de legenda {track_id} para: {nome_ass}...")
-    comando_extrair = [MKVEXTRACT_EXE, "tracks", caminho_mkv, f"{track_id}:{caminho_ass}"]
-    subprocess.run(comando_extrair, check=True, capture_output=True)
-    
-    return caminho_ass
+        raise RuntimeError(f"Erro ao embutir a legenda traduzida no MKV final: {e}")
 
 def _traduzir_sync(translator: Translator, texto: str, retries: int = MAX_RETENTATIVAS) -> str:
     """Chamada síncrona à API com Exponential Backoff e Detecção Automática."""
     for tentativa in range(retries):
         try:
-            # src="auto" faz a API identificar o idioma de origem dinamicamente
             return translator.translate(texto, src="auto", dest="pt").text
         except Exception as e:
             if tentativa == retries - 1:
@@ -170,7 +158,6 @@ def traduzir_legenda():
     root = tk.Tk()
     root.withdraw()
 
-    # O seletor agora suporta tanto arquivos de vídeo quanto arquivos diretos de legenda
     origem = filedialog.askopenfilename(
         title="Selecione o vídeo MKV ou arquivo de legenda",
         filetypes=[
@@ -187,28 +174,33 @@ def traduzir_legenda():
 
     try:
         inicio = time.time()
+        eh_mkv = origem.lower().endswith('.mkv')
         
-        # Desvio de fluxo: Se for MKV, extrai a trilha antes de traduzir
-        if origem.lower().endswith('.mkv'):
+        if eh_mkv:
             arquivo_trabalho = extrair_legenda_mkv(origem, destino)
         else:
             arquivo_trabalho = origem
 
-        caminho_final = os.path.join(
+        caminho_final_ass = os.path.join(
             destino,
             os.path.basename(arquivo_trabalho).replace(".ass", "_FIXED_PTBR.ass").replace(".txt", "_FIXED_PTBR.txt").replace("_ORIGINAL", "")
         )
 
         linhas_traduzidas = asyncio.run(_pipeline(arquivo_trabalho))
 
-        with open(caminho_final, "w", encoding="utf-8") as f_out:
+        with open(caminho_final_ass, "w", encoding="utf-8") as f_out:
             f_out.writelines(linhas_traduzidas)
 
+        if eh_mkv:
+            caminho_video_final = embutir_legenda_mkv(origem, caminho_final_ass, destino)
+            mensagem_final = f"Processo concluído com sucesso!\n\nVídeo gerado: {caminho_video_final}\nLegenda gerada: {caminho_final_ass}"
+        else:
+            mensagem_final = f"Tradução da legenda concluída!\n\nSalvo em: {caminho_final_ass}"
+
         elapsed = int(time.time() - inicio)
-        print(f"\nSalvo em: {caminho_final}")
-        print(f"Concluído em {elapsed}s")
+        print(f"\nProcesso completo finalizado em {elapsed}s")
         winsound.Beep(1000, 500)
-        messagebox.showinfo("Sucesso", f"Processo concluído em {elapsed}s!\n\nSalvo em: {caminho_final}")
+        messagebox.showinfo("Sucesso", f"{mensagem_final}\n\nTempo total: {elapsed}s")
 
     except Exception as e:
         messagebox.showerror("Erro Crítico", str(e))
