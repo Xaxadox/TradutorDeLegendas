@@ -138,8 +138,8 @@ def traduzir_legenda():
     root = tk.Tk()
     root.withdraw()
 
-    origem = filedialog.askopenfilename(
-        title="Selecione o vídeo MKV ou arquivo de legenda",
+    origens = filedialog.askopenfilenames(
+        title="Selecione os vídeos MKV ou arquivos de legenda",
         filetypes=[
             ("Mídia e Legendas", "*.mkv *.ass *.txt"),
             ("Vídeo MKV", "*.mkv"),
@@ -147,60 +147,73 @@ def traduzir_legenda():
             ("Texto Plano", "*.txt")
         ]
     )
-    if not origem: return
+    if not origens: return
 
-    # O diretório de destino passa a ser a mesma pasta do arquivo original
-    destino = os.path.dirname(origem)
+    tempo_total_inicio = time.time()
+    total_arquivos = len(origens)
+    arquivos_sucesso = 0
 
-    try:
-        inicio = time.time()
+    print("\n" + "="*60)
+    print(f"INICIANDO PROCESSAMENTO EM LOTE: {total_arquivos} arquivo(s)")
+    print("="*60)
+
+    for index, origem in enumerate(origens, 1):
+        destino = os.path.dirname(origem)
         eh_mkv = origem.lower().endswith('.mkv')
         
-        print("\n" + "="*50)
-        
-        if eh_mkv:
-            print("[Etapa 1/3] Extração de Mídia")
-            arquivo_trabalho = extrair_legenda_mkv(origem, destino)
-        else:
-            arquivo_trabalho = origem
-
-        caminho_final_ass = os.path.join(
-            destino,
-            os.path.basename(arquivo_trabalho).replace(".ass", "_PTBR.ass").replace(".txt", "_PTBR.txt").replace("_ORIGINAL", "")
-        )
-
-        etapa_traducao = "2/3" if eh_mkv else "1/1"
-        print(f"\n[Etapa {etapa_traducao}] Tradução via Google Translate API")
-        linhas_traduzidas = asyncio.run(_pipeline(arquivo_trabalho))
-
-        with open(caminho_final_ass, "w", encoding="utf-8") as f_out:
-            f_out.writelines(linhas_traduzidas)
-
-        if eh_mkv:
-            print("\n[Etapa 3/3] Multiplexação e Limpeza")
-            caminho_video_final = embutir_legenda_mkv(origem, caminho_final_ass, destino)
+        try:
+            inicio_arquivo = time.time()
             
-            try:
-                if os.path.exists(arquivo_trabalho): os.remove(arquivo_trabalho)
-                if os.path.exists(caminho_final_ass): os.remove(caminho_final_ass)
-                print("Lixo temporário (.ass) limpo com sucesso.")
-            except Exception as lim_e:
-                print(f"Aviso: Falha na limpeza de arquivos temporários: {lim_e}")
+            print(f"\n--- Arquivo [{index}/{total_arquivos}]: {os.path.basename(origem)} ---")
+            
+            if eh_mkv:
+                print("[Etapa 1/3] Extração de Mídia")
+                arquivo_trabalho = extrair_legenda_mkv(origem, destino)
+            else:
+                arquivo_trabalho = origem
 
-            mensagem_final = f"Processo MKV finalizado com sucesso!\n\nVídeo pronto em:\n{caminho_video_final}"
-        else:
-            mensagem_final = f"Tradução de legenda concluída!\n\nArquivo salvo em:\n{caminho_final_ass}"
+            caminho_final_ass = os.path.join(
+                destino,
+                os.path.basename(arquivo_trabalho).replace(".ass", "_PTBR.ass").replace(".txt", "_PTBR.txt").replace("_ORIGINAL", "")
+            )
 
-        elapsed = int(time.time() - inicio)
-        print("="*50)
-        print(f"Concluído em {elapsed}s")
-        
-        winsound.Beep(1000, 500)
-        messagebox.showinfo("Operação Concluída", f"{mensagem_final}\n\nTempo gasto: {elapsed} segundos.")
+            etapa_traducao = "2/3" if eh_mkv else "1/1"
+            print(f"\n[Etapa {etapa_traducao}] Tradução via Google Translate API")
+            linhas_traduzidas = asyncio.run(_pipeline(arquivo_trabalho))
 
-    except Exception as e:
-        messagebox.showerror("Erro Crítico", str(e))
-        raise
+            with open(caminho_final_ass, "w", encoding="utf-8") as f_out:
+                f_out.writelines(linhas_traduzidas)
+
+            if eh_mkv:
+                print("\n[Etapa 3/3] Multiplexação e Limpeza")
+                embutir_legenda_mkv(origem, caminho_final_ass, destino)
+                
+                try:
+                    if os.path.exists(arquivo_trabalho): os.remove(arquivo_trabalho)
+                    if os.path.exists(caminho_final_ass): os.remove(caminho_final_ass)
+                    print("Lixo temporário (.ass) limpo com sucesso.")
+                except Exception as lim_e:
+                    print(f"Aviso: Falha na limpeza de arquivos temporários: {lim_e}")
+
+            elapsed = int(time.time() - inicio_arquivo)
+            print(f"-> Arquivo concluído com sucesso em {elapsed}s.")
+            arquivos_sucesso += 1
+
+        except Exception as e:
+            print(f"\n[ERRO CRÍTICO] Falha no arquivo {os.path.basename(origem)}: {e}")
+            print("Pulando para o próximo arquivo da fila...")
+            continue # Impede que o erro em um arquivo derrube todo o processamento
+
+    tempo_total_gasto = int(time.time() - tempo_total_inicio)
+    
+    print("\n" + "="*60)
+    print(f"PROCESSAMENTO EM LOTE FINALIZADO")
+    print(f"Sucesso: {arquivos_sucesso} de {total_arquivos} arquivos.")
+    print(f"Tempo Total Gasto: {tempo_total_gasto}s")
+    print("="*60)
+    
+    winsound.Beep(1000, 500)
+    messagebox.showinfo("Operação Concluída", f"Lote finalizado!\n\nSucesso: {arquivos_sucesso}/{total_arquivos}\nTempo total: {tempo_total_gasto} segundos.")
 
 if __name__ == "__main__":
     traduzir_legenda()
