@@ -25,9 +25,7 @@ MKVEXTRACT_EXE   = os.path.join(MKVTOOLNIX_PATH, "mkvextract.exe")
 padrao_dialogo = re.compile(r'(Dialogue:.*,,)(.*)')
 
 def extrair_legenda_mkv(caminho_mkv, pasta_destino):
-    """Lê o arquivo MKV usando mkvmerge, identifica a legenda ASS e a extrai."""
-    tqdm.write(f"\nAnalisando MKV: {os.path.basename(caminho_mkv)}")
-    
+    tqdm.write(f"Analisando estrutura do vídeo MKV...")
     comando_info = [MKVMERGE_EXE, "-J", caminho_mkv]
     try:
         resultado = subprocess.run(comando_info, capture_output=True, text=True, check=True, encoding='utf-8')
@@ -40,7 +38,6 @@ def extrair_legenda_mkv(caminho_mkv, pasta_destino):
         if track.get("type") == "subtitles":
             codec = track.get("codec", "").lower()
             codec_id = track.get("properties", {}).get("codec_id", "").lower()
-            
             if "ass" in codec or "substation" in codec or "s_text/ass" in codec_id:
                 track_id = track["id"]
                 break
@@ -51,19 +48,16 @@ def extrair_legenda_mkv(caminho_mkv, pasta_destino):
     nome_ass = os.path.basename(caminho_mkv).rsplit('.', 1)[0] + "_ORIGINAL.ass"
     caminho_ass = os.path.join(pasta_destino, nome_ass)
 
-    tqdm.write(f"Extraindo trilha de legenda {track_id} para: {nome_ass}...")
+    tqdm.write(f"Extraindo trilha original para processamento...")
     comando_extrair = [MKVEXTRACT_EXE, "tracks", caminho_mkv, f"{track_id}:{caminho_ass}"]
     subprocess.run(comando_extrair, check=True, capture_output=True)
-    
     return caminho_ass
 
 def embutir_legenda_mkv(caminho_mkv_original, caminho_ass_traduzido, pasta_destino):
-    """Mescla o vídeo original com a nova legenda traduzida em um novo arquivo MKV."""
     nome_saida = os.path.basename(caminho_mkv_original).rsplit('.', 1)[0] + "_PTBR.mkv"
     caminho_saida = os.path.join(pasta_destino, nome_saida)
     
-    tqdm.write(f"\nCriando novo contêiner MKV com a legenda embutida: {nome_saida}")
-    
+    tqdm.write(f"Criando novo contêiner de vídeo ({nome_saida})...")
     comando_mux = [
         MKVMERGE_EXE,
         "-o", caminho_saida,
@@ -75,13 +69,11 @@ def embutir_legenda_mkv(caminho_mkv_original, caminho_ass_traduzido, pasta_desti
     
     try:
         subprocess.run(comando_mux, check=True, capture_output=True)
-        tqdm.write(f"Novo arquivo de vídeo gerado com sucesso.")
         return caminho_saida
     except Exception as e:
         raise RuntimeError(f"Erro ao embutir a legenda traduzida no MKV final: {e}")
 
 def _traduzir_sync(translator: Translator, texto: str, retries: int = MAX_RETENTATIVAS) -> str:
-    """Chamada síncrona à API com Exponential Backoff e Detecção Automática."""
     for tentativa in range(retries):
         try:
             return translator.translate(texto, src="auto", dest="pt").text
@@ -91,31 +83,25 @@ def _traduzir_sync(translator: Translator, texto: str, retries: int = MAX_RETENT
             time.sleep(2 ** tentativa)
 
 async def _traduzir_lote(executor, semaforo, lote_indices, linhas, pbar):
-    """Processa blocos de diálogos em paralelo respeitando o semáforo."""
     loop = asyncio.get_running_loop()
     translator = Translator()
-
     textos = [padrao_dialogo.match(linhas[idx]).group(2).strip() for idx in lote_indices]
     bloco = "\n".join(textos)
 
     async with semaforo:
         try:
-            traduzido = await loop.run_in_executor(
-                executor, _traduzir_sync, translator, bloco
-            )
-            
+            traduzido = await loop.run_in_executor(executor, _traduzir_sync, translator, bloco)
             frases = [f.strip() for f in traduzido.split("\n") if f.strip()]
 
             if len(frases) == len(lote_indices):
                 pares = [(lote_indices[j], frases[j]) for j in range(len(lote_indices))]
             else:
-                tqdm.write(f"[Aviso] Dessincronia no lote (esperado {len(lote_indices)}, recebido {len(frases)}). Executando fallback sequencial...")
+                tqdm.write(f"\n[Aviso] Dessincronia no lote (esperado {len(lote_indices)}, recebido {len(frases)}). Executando fallback sequencial...")
                 pares = []
                 for idx, texto in zip(lote_indices, textos):
                     r = await loop.run_in_executor(executor, _traduzir_sync, translator, texto)
                     pares.append((idx, r))
                     await asyncio.sleep(0.5)
-
         except Exception as e:
             tqdm.write(f"\n[Erro Crítico] Lote ignorado. Motivo: {e}")
             pares = [(idx, textos[i]) for i, idx in enumerate(lote_indices)]
@@ -124,17 +110,13 @@ async def _traduzir_lote(executor, semaforo, lote_indices, linhas, pbar):
     return pares
 
 async def _pipeline(origem: str) -> list[str]:
-    """Gerencia a leitura do arquivo de trabalho, divisão em lotes e coleta de resultados."""
     with open(origem, "r", encoding="utf-8") as f:
         linhas = f.readlines()
 
-    indices_map = [
-        i for i, l in enumerate(linhas)
-        if padrao_dialogo.match(l) and padrao_dialogo.match(l).group(2).strip()
-    ]
+    indices_map = [i for i, l in enumerate(linhas) if padrao_dialogo.match(l) and padrao_dialogo.match(l).group(2).strip()]
     total = len(indices_map)
-    print(f"\nTotal de diálogos encontrados: {total}")
-    print(f"Estratégia: Lotes de {TAMANHO_LOTE} | {MAX_CONCORRENTE} threads | Máx {MAX_RETENTATIVAS} retries\n")
+    print(f"Total de diálogos encontrados: {total}")
+    print(f"Processamento paralelo iniciado...\n")
 
     lotes = [indices_map[i : i + TAMANHO_LOTE] for i in range(0, total, TAMANHO_LOTE)]
     semaforo = asyncio.Semaphore(MAX_CONCORRENTE)
@@ -142,7 +124,6 @@ async def _pipeline(origem: str) -> list[str]:
     with ThreadPoolExecutor(max_workers=MAX_CONCORRENTE) as executor:
         with tqdm(total=total, desc="Traduzindo", unit="linha", colour="green",
                   bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt} linhas [{elapsed}<{remaining}]") as pbar:
-
             tasks = [_traduzir_lote(executor, semaforo, lote, linhas, pbar) for lote in lotes]
             resultados = await asyncio.gather(*tasks)
 
@@ -154,14 +135,13 @@ async def _pipeline(origem: str) -> list[str]:
     return linhas
 
 def traduzir_legenda():
-    """Interface gráfica e orquestração do fluxo do programa."""
     root = tk.Tk()
     root.withdraw()
 
     origem = filedialog.askopenfilename(
         title="Selecione o vídeo MKV ou arquivo de legenda",
         filetypes=[
-            ("Todos os formatos suportados", "*.mkv;*.ass;*.txt"),
+            ("Mídia e Legendas", "*.mkv *.ass *.txt"),
             ("Vídeo MKV", "*.mkv"),
             ("Legenda ASS", "*.ass"),
             ("Texto Plano", "*.txt")
@@ -169,49 +149,54 @@ def traduzir_legenda():
     )
     if not origem: return
 
-    destino = filedialog.askdirectory(title="Escolha a pasta onde salvar")
-    if not destino: return
+    # O diretório de destino passa a ser a mesma pasta do arquivo original
+    destino = os.path.dirname(origem)
 
     try:
         inicio = time.time()
         eh_mkv = origem.lower().endswith('.mkv')
         
+        print("\n" + "="*50)
+        
         if eh_mkv:
+            print("[Etapa 1/3] Extração de Mídia")
             arquivo_trabalho = extrair_legenda_mkv(origem, destino)
         else:
             arquivo_trabalho = origem
 
         caminho_final_ass = os.path.join(
             destino,
-            os.path.basename(arquivo_trabalho).replace(".ass", "_FIXED_PTBR.ass").replace(".txt", "_FIXED_PTBR.txt").replace("_ORIGINAL", "")
+            os.path.basename(arquivo_trabalho).replace(".ass", "_PTBR.ass").replace(".txt", "_PTBR.txt").replace("_ORIGINAL", "")
         )
 
+        etapa_traducao = "2/3" if eh_mkv else "1/1"
+        print(f"\n[Etapa {etapa_traducao}] Tradução via Google Translate API")
         linhas_traduzidas = asyncio.run(_pipeline(arquivo_trabalho))
 
         with open(caminho_final_ass, "w", encoding="utf-8") as f_out:
             f_out.writelines(linhas_traduzidas)
 
         if eh_mkv:
+            print("\n[Etapa 3/3] Multiplexação e Limpeza")
             caminho_video_final = embutir_legenda_mkv(origem, caminho_final_ass, destino)
-            mensagem_final = f"Processo concluído com sucesso!\n\nVídeo gerado: {caminho_video_final}"
             
-            # --- Limpeza de arquivos temporários ---
             try:
-                if os.path.exists(arquivo_trabalho):
-                    os.remove(arquivo_trabalho)  # Remove a legenda _ORIGINAL extraída
-                if os.path.exists(caminho_final_ass):
-                    os.remove(caminho_final_ass) # Remove a legenda _FIXED_PTBR
-                print("\nArquivos temporários .ass removidos com sucesso.")
+                if os.path.exists(arquivo_trabalho): os.remove(arquivo_trabalho)
+                if os.path.exists(caminho_final_ass): os.remove(caminho_final_ass)
+                print("Lixo temporário (.ass) limpo com sucesso.")
             except Exception as lim_e:
-                print(f"\nAviso: Não foi possível remover os arquivos temporários: {lim_e}")
-                
+                print(f"Aviso: Falha na limpeza de arquivos temporários: {lim_e}")
+
+            mensagem_final = f"Processo MKV finalizado com sucesso!\n\nVídeo pronto em:\n{caminho_video_final}"
         else:
-            mensagem_final = f"Tradução da legenda concluída!\n\nSalvo em: {caminho_final_ass}"
+            mensagem_final = f"Tradução de legenda concluída!\n\nArquivo salvo em:\n{caminho_final_ass}"
 
         elapsed = int(time.time() - inicio)
-        print(f"\nProcesso completo finalizado em {elapsed}s")
+        print("="*50)
+        print(f"Concluído em {elapsed}s")
+        
         winsound.Beep(1000, 500)
-        messagebox.showinfo("Sucesso", f"{mensagem_final}\n\nTempo total: {elapsed}s")
+        messagebox.showinfo("Operação Concluída", f"{mensagem_final}\n\nTempo gasto: {elapsed} segundos.")
 
     except Exception as e:
         messagebox.showerror("Erro Crítico", str(e))
