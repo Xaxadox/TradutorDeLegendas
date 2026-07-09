@@ -193,7 +193,18 @@ def traduzir_legenda():
 
         if eh_mkv:
             caminho_video_final = embutir_legenda_mkv(origem, caminho_final_ass, destino)
-            mensagem_final = f"Processo concluído com sucesso!\n\nVídeo gerado: {caminho_video_final}\nLegenda gerada: {caminho_final_ass}"
+            mensagem_final = f"Processo concluído com sucesso!\n\nVídeo gerado: {caminho_video_final}"
+            
+            # --- Limpeza de arquivos temporários ---
+            try:
+                if os.path.exists(arquivo_trabalho):
+                    os.remove(arquivo_trabalho)  # Remove a legenda _ORIGINAL extraída
+                if os.path.exists(caminho_final_ass):
+                    os.remove(caminho_final_ass) # Remove a legenda _FIXED_PTBR
+                print("\nArquivos temporários .ass removidos com sucesso.")
+            except Exception as lim_e:
+                print(f"\nAviso: Não foi possível remover os arquivos temporários: {lim_e}")
+                
         else:
             mensagem_final = f"Tradução da legenda concluída!\n\nSalvo em: {caminho_final_ass}"
 
