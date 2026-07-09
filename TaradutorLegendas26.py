@@ -28,6 +28,40 @@ def extrair_legenda_mkv(caminho_mkv, pasta_destino):
     """Lê o arquivo MKV usando mkvmerge, identifica a primeira legenda ASS e a extrai."""
     tqdm.write(f"\nAnalisando MKV: {os.path.basename(caminho_mkv)}")
     
+    comando_info = [MKVMERGE_EXE, "-J", caminho_mkv]
+    try:
+        resultado = subprocess.run(comando_info, capture_output=True, text=True, check=True, encoding='utf-8')
+        info = json.loads(resultado.stdout)
+    except Exception as e:
+        raise RuntimeError(f"Erro ao ler MKV (Verifique se o MKVToolNix está instalado em {MKVTOOLNIX_PATH}): {e}")
+
+    track_id = None
+    for track in info.get("tracks", []):
+        if track.get("type") == "subtitles":
+            # Captura tanto o nome genérico do codec quanto o codec_id oficial dentro de properties
+            codec = track.get("codec", "").lower()
+            codec_id = track.get("properties", {}).get("codec_id", "").lower()
+            
+            # Verifica as possíveis nomenclaturas para SubStation Alpha (.ass)
+            if "ass" in codec or "substation" in codec or "s_text/ass" in codec_id:
+                track_id = track["id"]
+                break
+
+    if track_id is None:
+        raise ValueError("Nenhuma legenda no formato .ass (SubStation Alpha) foi encontrada neste MKV.")
+
+    nome_ass = os.path.basename(caminho_mkv).rsplit('.', 1)[0] + "_ORIGINAL.ass"
+    caminho_ass = os.path.join(pasta_destino, nome_ass)
+
+    tqdm.write(f"Extraindo trilha de legenda {track_id} para: {nome_ass}...")
+    comando_extrair = [MKVEXTRACT_EXE, "tracks", caminho_mkv, f"{track_id}:{caminho_ass}"]
+    subprocess.run(comando_extrair, check=True, capture_output=True)
+    
+    return caminho_ass
+
+    """Lê o arquivo MKV usando mkvmerge, identifica a primeira legenda ASS e a extrai."""
+    tqdm.write(f"\nAnalisando MKV: {os.path.basename(caminho_mkv)}")
+    
     # 1. Mapeia a estrutura de trilhas do arquivo de vídeo (Retorna formato JSON)
     comando_info = [MKVMERGE_EXE, "-J", caminho_mkv]
     try:
