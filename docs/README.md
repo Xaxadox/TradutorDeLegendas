@@ -19,7 +19,7 @@ Uma ferramenta automatizada em Python para extração, tradução e multiplexaç
 * **Python 3.8+**
 * **MKVToolNix:** Necessário para manipulação de contêineres de vídeo.
     * *Opção 1 (Sistema):* Instale o [MKVToolNix](https://mkvtoolnix.download/) no caminho padrão (`C:\Program Files\MKVToolNix`).
-    * *Opção 2 (Portátil):* Crie uma pasta chamada `mkvtoolnix` ao lado do script e coloque os arquivos `mkvmerge.exe` e `mkvextract.exe` dentro dela.
+    * *Opção 2 (Portátil):* Use a pasta chamada `mkvtoolnix` na mesma pasta do script.
 
 ### Dependências Python
 Instale as bibliotecas necessárias executando o comando abaixo. 
