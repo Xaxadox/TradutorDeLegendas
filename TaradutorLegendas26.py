@@ -16,14 +16,10 @@ TAMANHO_LOTE     = 40  # Linhas por lote enviado à API
 MAX_CONCORRENTE  = 5   # Trabalhadores/Lotes em paralelo ao mesmo tempo
 MAX_RETENTATIVAS = 3   # Tentativas antes de considerar falha de rede
 
-# 1. Verifica se os executáveis estão na mesma pasta do script (Modo Portátil)
 DIRETORIO_SCRIPT = os.path.dirname(os.path.abspath(__file__))
 LOCAL_MKVTOOLNIX = os.path.join(DIRETORIO_SCRIPT, "mkvtoolnix")
-
-# 2. Caminho padrão de instalação no sistema Windows
 SYSTEM_MKVTOOLNIX = r"C:\Program Files\MKVToolNix"
 
-# Define qual caminho usar
 if os.path.exists(os.path.join(LOCAL_MKVTOOLNIX, "mkvmerge.exe")):
     MKVTOOLNIX_PATH = LOCAL_MKVTOOLNIX
 else:
@@ -33,7 +29,6 @@ MKVMERGE_EXE   = os.path.join(MKVTOOLNIX_PATH, "mkvmerge.exe")
 MKVEXTRACT_EXE = os.path.join(MKVTOOLNIX_PATH, "mkvextract.exe")
 
 def verificar_dependencias_mkv():
-    """Valida se as ferramentas necessárias para manipular MKV existem."""
     return os.path.exists(MKVMERGE_EXE) and os.path.exists(MKVEXTRACT_EXE)
 # ──────────────────────────────────────────────────────────────────────────────
 
@@ -100,26 +95,46 @@ def _traduzir_sync(translator: Translator, texto: str, retries: int = MAX_RETENT
 async def _traduzir_lote(executor, semaforo, lote_indices, linhas, pbar):
     loop = asyncio.get_running_loop()
     translator = Translator()
-    textos = [padrao_dialogo.match(linhas[idx]).group(2).strip() for idx in lote_indices]
-    bloco = "\n".join(textos)
+    
+    textos_preparados = []
+    for idx in lote_indices:
+        texto = padrao_dialogo.match(linhas[idx]).group(2).strip()
+        # PREVENÇÃO DE BUG: Isola as tags \N e \n para que a API não aglutine as palavras
+        texto = texto.replace(r"\N", " \\N ").replace(r"\n", " \\n ")
+        textos_preparados.append(texto)
+
+    bloco = "\n".join(textos_preparados)
 
     async with semaforo:
         try:
             traduzido = await loop.run_in_executor(executor, _traduzir_sync, translator, bloco)
             frases = [f.strip() for f in traduzido.split("\n") if f.strip()]
 
-            if len(frases) == len(lote_indices):
-                pares = [(lote_indices[j], frases[j]) for j in range(len(lote_indices))]
+            # PÓS-PROCESSAMENTO: Remove os espaços injetados e reagrupa as tags via Regex
+            frases_limpas = []
+            for f in frases:
+                f = re.sub(r'\s*\\\s*N\s*', r'\\N', f)
+                f = re.sub(r'\s*\\\s*n\s*', r'\\n', f)
+                frases_limpas.append(f)
+
+            if len(frases_limpas) == len(lote_indices):
+                pares = [(lote_indices[j], frases_limpas[j]) for j in range(len(lote_indices))]
             else:
-                tqdm.write(f"\n[Aviso] Dessincronia no lote (esperado {len(lote_indices)}, recebido {len(frases)}). Executando fallback sequencial...")
+                tqdm.write(f"\n[Aviso] Dessincronia no lote (esperado {len(lote_indices)}, recebido {len(frases_limpas)}). Executando fallback sequencial...")
                 pares = []
-                for idx, texto in zip(lote_indices, textos):
+                for idx, texto in zip(lote_indices, textos_preparados):
                     r = await loop.run_in_executor(executor, _traduzir_sync, translator, texto)
+                    r = re.sub(r'\s*\\\s*N\s*', r'\\N', r)
+                    r = re.sub(r'\s*\\\s*n\s*', r'\\n', r)
                     pares.append((idx, r))
                     await asyncio.sleep(0.5)
         except Exception as e:
             tqdm.write(f"\n[Erro Crítico] Lote ignorado. Motivo: {e}")
-            pares = [(idx, textos[i]) for i, idx in enumerate(lote_indices)]
+            pares = []
+            for i, idx in enumerate(lote_indices):
+                original_restaurado = re.sub(r'\s*\\\s*N\s*', r'\\N', textos_preparados[i])
+                original_restaurado = re.sub(r'\s*\\\s*n\s*', r'\\n', original_restaurado)
+                pares.append((idx, original_restaurado))
 
     pbar.update(len(lote_indices))
     return pares
@@ -182,7 +197,6 @@ def traduzir_legenda():
             print(f"\n--- Arquivo [{index}/{total_arquivos}]: {os.path.basename(origem)} ---")
             
             if eh_mkv:
-                # TRAVA DE SEGURANÇA
                 if not verificar_dependencias_mkv():
                     erro_msg = (
                         "O MKVToolNix não foi encontrado.\n\n"
