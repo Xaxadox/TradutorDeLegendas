@@ -11,15 +11,30 @@ from googletrans import Translator
 from tqdm import tqdm
 import winsound
 
-# ─── Configurações ────────────────────────────────────────────────────────────
+# ─── Configurações e Dependências ─────────────────────────────────────────────
 TAMANHO_LOTE     = 40  # Linhas por lote enviado à API
 MAX_CONCORRENTE  = 5   # Trabalhadores/Lotes em paralelo ao mesmo tempo
 MAX_RETENTATIVAS = 3   # Tentativas antes de considerar falha de rede
 
-# Caminhos padrão do MKVToolNix no Windows
-MKVTOOLNIX_PATH  = r"C:\Program Files\MKVToolNix"
-MKVMERGE_EXE     = os.path.join(MKVTOOLNIX_PATH, "mkvmerge.exe")
-MKVEXTRACT_EXE   = os.path.join(MKVTOOLNIX_PATH, "mkvextract.exe")
+# 1. Verifica se os executáveis estão na mesma pasta do script (Modo Portátil)
+DIRETORIO_SCRIPT = os.path.dirname(os.path.abspath(__file__))
+LOCAL_MKVTOOLNIX = os.path.join(DIRETORIO_SCRIPT, "mkvtoolnix")
+
+# 2. Caminho padrão de instalação no sistema Windows
+SYSTEM_MKVTOOLNIX = r"C:\Program Files\MKVToolNix"
+
+# Define qual caminho usar
+if os.path.exists(os.path.join(LOCAL_MKVTOOLNIX, "mkvmerge.exe")):
+    MKVTOOLNIX_PATH = LOCAL_MKVTOOLNIX
+else:
+    MKVTOOLNIX_PATH = SYSTEM_MKVTOOLNIX
+
+MKVMERGE_EXE   = os.path.join(MKVTOOLNIX_PATH, "mkvmerge.exe")
+MKVEXTRACT_EXE = os.path.join(MKVTOOLNIX_PATH, "mkvextract.exe")
+
+def verificar_dependencias_mkv():
+    """Valida se as ferramentas necessárias para manipular MKV existem."""
+    return os.path.exists(MKVMERGE_EXE) and os.path.exists(MKVEXTRACT_EXE)
 # ──────────────────────────────────────────────────────────────────────────────
 
 padrao_dialogo = re.compile(r'(Dialogue:.*,,)(.*)')
@@ -31,7 +46,7 @@ def extrair_legenda_mkv(caminho_mkv, pasta_destino):
         resultado = subprocess.run(comando_info, capture_output=True, text=True, check=True, encoding='utf-8')
         info = json.loads(resultado.stdout)
     except Exception as e:
-        raise RuntimeError(f"Erro ao ler MKV (Verifique se o MKVToolNix está instalado em {MKVTOOLNIX_PATH}): {e}")
+        raise RuntimeError(f"Erro ao ler MKV (Verifique dependências): {e}")
 
     track_id = None
     for track in info.get("tracks", []):
@@ -167,6 +182,17 @@ def traduzir_legenda():
             print(f"\n--- Arquivo [{index}/{total_arquivos}]: {os.path.basename(origem)} ---")
             
             if eh_mkv:
+                # TRAVA DE SEGURANÇA
+                if not verificar_dependencias_mkv():
+                    erro_msg = (
+                        "O MKVToolNix não foi encontrado.\n\n"
+                        "Para processar vídeos (.mkv), instale o MKVToolNix ou coloque "
+                        "'mkvmerge.exe' e 'mkvextract.exe' na pasta 'mkvtoolnix' junto a este script."
+                    )
+                    print(f"[AVISO] Processamento abortado. Dependências ausentes.")
+                    messagebox.showwarning("Dependência Ausente", erro_msg)
+                    continue
+
                 print("[Etapa 1/3] Extração de Mídia")
                 arquivo_trabalho = extrair_legenda_mkv(origem, destino)
             else:
@@ -202,7 +228,7 @@ def traduzir_legenda():
         except Exception as e:
             print(f"\n[ERRO CRÍTICO] Falha no arquivo {os.path.basename(origem)}: {e}")
             print("Pulando para o próximo arquivo da fila...")
-            continue # Impede que o erro em um arquivo derrube todo o processamento
+            continue
 
     tempo_total_gasto = int(time.time() - tempo_total_inicio)
     
