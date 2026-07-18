@@ -45,7 +45,7 @@ class ConfigManager:
 
 class MkvWrapper:
     @staticmethod
-    def extrair_legenda(caminho_mkv, pasta_destino, logger):
+    def extrair_legenda(caminho_mkv, pasta_destino, idioma_preferido, logger):
         mkvmerge, mkvextract = ConfigManager.get_mkv_bins()
         logger("Analisando estrutura do vídeo MKV...")
         
@@ -58,16 +58,27 @@ class MkvWrapper:
             raise RuntimeError(f"Erro ao ler MKV (Verifique dependências): {e}")
 
         track_id = None
+        fallback_track_id = None
+
         for track in info.get("tracks", []):
             if track.get("type") == "subtitles":
                 codec = track.get("codec", "").lower()
                 codec_id = track.get("properties", {}).get("codec_id", "").lower()
-                # Priorizar ASS, mas aceitar SRT se for o caso
-                if "ass" in codec or "substation" in codec or "s_text/ass" in codec_id:
-                    track_id = track["id"]
-                    break
-                elif "srt" in codec or "s_text/utf8" in codec_id:
-                    track_id = track["id"]
+                lang = track.get("properties", {}).get("language", "").lower()
+                
+                # Verifica se é formato suportado (ASS ou SRT)
+                is_supported = "ass" in codec or "substation" in codec or "s_text/ass" in codec_id or "srt" in codec or "s_text/utf8" in codec_id
+                
+                if is_supported:
+                    if fallback_track_id is None:
+                        fallback_track_id = track["id"]  # Salva o primeiro que encontrar como fallback
+                        
+                    if idioma_preferido and lang == idioma_preferido.lower():
+                        track_id = track["id"]
+                        break  # Encontrou o idioma preferido, pode parar a busca
+
+        if track_id is None:
+            track_id = fallback_track_id
 
         if track_id is None:
             raise ValueError("Nenhuma legenda (.ass ou .srt) encontrada neste MKV.")
@@ -222,9 +233,19 @@ class AppGui(ctk.CTk):
         self.lbl_files = ctk.CTkLabel(self, text="Nenhum arquivo selecionado", text_color="gray")
         self.lbl_files.pack(pady=5)
 
+        self.frame_options = ctk.CTkFrame(self)
+        self.frame_options.pack(pady=10, padx=20)
+        
+        self.lbl_lang = ctk.CTkLabel(self.frame_options, text="Idioma Preferido p/ MKV (ex: eng, jpn):")
+        self.lbl_lang.pack(side="left", padx=(10, 5), pady=5)
+        
+        self.entry_lang = ctk.CTkEntry(self.frame_options, width=70)
+        self.entry_lang.insert(0, "eng")
+        self.entry_lang.pack(side="left", padx=(0, 10), pady=5)
+
         self.progressbar = ctk.CTkProgressBar(self, width=600)
         self.progressbar.set(0)
-        self.progressbar.pack(pady=20)
+        self.progressbar.pack(pady=10)
 
         self.textbox = ctk.CTkTextbox(self, width=650, height=250, state="disabled")
         self.textbox.pack(pady=10)
@@ -293,8 +314,10 @@ class AppGui(ctk.CTk):
                         self.log("[AVISO] Processamento abortado. MKVToolNix não encontrado.")
                         messagebox.showwarning("Erro", "O MKVToolNix não foi encontrado.")
                         break
-                    self.log("[Etapa 1/3] Extração de Mídia via MKVToolNix")
-                    arquivo_trabalho = MkvWrapper.extrair_legenda(origem, destino_dir, self.log)
+                    
+                    idioma_preferido = self.entry_lang.get().strip()
+                    self.log(f"[Etapa 1/3] Extração de Mídia via MKVToolNix (Idioma: {idioma_preferido or 'Qualquer'})")
+                    arquivo_trabalho = MkvWrapper.extrair_legenda(origem, destino_dir, idioma_preferido, self.log)
 
                 # Definir caminhos
                 nome_base = os.path.basename(arquivo_trabalho)
