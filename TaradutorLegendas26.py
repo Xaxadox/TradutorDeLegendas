@@ -45,6 +45,15 @@ class ConfigManager:
 
 class MkvWrapper:
     @staticmethod
+    def _detectar_formato(codec, codec_id):
+        """Retorna a extensão do formato de legenda ou None se não for suportado."""
+        if "ass" in codec or "substation" in codec or "s_text/ass" in codec_id:
+            return ".ass"
+        elif "srt" in codec or "s_text/utf8" in codec_id:
+            return ".srt"
+        return None
+
+    @staticmethod
     def extrair_legenda(caminho_mkv, pasta_destino, idioma_preferido, logger):
         mkvmerge, mkvextract = ConfigManager.get_mkv_bins()
         logger("Analisando estrutura do vídeo MKV...")
@@ -59,6 +68,8 @@ class MkvWrapper:
 
         track_id = None
         fallback_track_id = None
+        selected_ext = ".ass"
+        fallback_ext = ".ass"
 
         for track in info.get("tracks", []):
             if track.get("type") == "subtitles":
@@ -66,25 +77,28 @@ class MkvWrapper:
                 codec_id = track.get("properties", {}).get("codec_id", "").lower()
                 lang = track.get("properties", {}).get("language", "").lower()
                 
-                # Verifica se é formato suportado (ASS ou SRT)
-                is_supported = "ass" in codec or "substation" in codec or "s_text/ass" in codec_id or "srt" in codec or "s_text/utf8" in codec_id
+                ext = MkvWrapper._detectar_formato(codec, codec_id)
+                if ext is None:
+                    continue
                 
-                if is_supported:
-                    if fallback_track_id is None:
-                        fallback_track_id = track["id"]  # Salva o primeiro que encontrar como fallback
-                        
-                    if idioma_preferido and lang == idioma_preferido.lower():
-                        track_id = track["id"]
-                        break  # Encontrou o idioma preferido, pode parar a busca
+                if fallback_track_id is None:
+                    fallback_track_id = track["id"]
+                    fallback_ext = ext
+                    
+                if idioma_preferido and lang == idioma_preferido.lower():
+                    track_id = track["id"]
+                    selected_ext = ext
+                    break
 
         if track_id is None:
             track_id = fallback_track_id
+            selected_ext = fallback_ext
 
         if track_id is None:
             raise ValueError("Nenhuma legenda (.ass ou .srt) encontrada neste MKV.")
 
         nome_base = os.path.basename(caminho_mkv).rsplit('.', 1)[0]
-        caminho_extraido = os.path.join(pasta_destino, f"{nome_base}_ORIGINAL.ass") # mkvextract extrai no formato da trilha
+        caminho_extraido = os.path.join(pasta_destino, f"{nome_base}_ORIGINAL{selected_ext}")
 
         logger("Extraindo trilha original para processamento...")
         comando_extrair = [mkvextract, "tracks", caminho_mkv, f"{track_id}:{caminho_extraido}"]
@@ -242,6 +256,10 @@ class AppGui(ctk.CTk):
         self.entry_lang = ctk.CTkEntry(self.frame_options, width=70)
         self.entry_lang.insert(0, "eng")
         self.entry_lang.pack(side="left", padx=(0, 10), pady=5)
+        
+        self.var_manter_legenda = ctk.BooleanVar(value=False)
+        self.chk_manter_legenda = ctk.CTkCheckBox(self.frame_options, text="Manter legenda externa", variable=self.var_manter_legenda)
+        self.chk_manter_legenda.pack(side="left", padx=(10, 0), pady=5)
 
         self.progressbar = ctk.CTkProgressBar(self, width=600)
         self.progressbar.set(0)
@@ -268,14 +286,16 @@ class AppGui(ctk.CTk):
             self.btn_run.configure(state="normal")
 
     def log(self, msg):
-        self.textbox.configure(state="normal")
-        self.textbox.insert("end", str(msg) + "\n")
-        self.textbox.see("end")
-        self.textbox.configure(state="disabled")
+        def _update(m=msg):
+            self.textbox.configure(state="normal")
+            self.textbox.insert("end", str(m) + "\n")
+            self.textbox.see("end")
+            self.textbox.configure(state="disabled")
+        self.after(0, _update)
 
     def update_progress(self, current, total):
         if total > 0:
-            self.progressbar.set(current / total)
+            self.after(0, lambda c=current, t=total: self.progressbar.set(c / t))
 
     def start_translation(self):
         self.btn_run.configure(state="disabled")
@@ -286,10 +306,14 @@ class AppGui(ctk.CTk):
         self.textbox.delete("0.0", "end")
         self.textbox.configure(state="disabled")
         
+        # Captura valores da UI na main thread antes de delegar para a thread de background
+        idioma_preferido = self.entry_lang.get().strip()
+        manter_legenda = self.var_manter_legenda.get()
+        
         self._is_running = True
-        threading.Thread(target=self._orchestrate, daemon=True).start()
+        threading.Thread(target=self._orchestrate, args=(idioma_preferido, manter_legenda), daemon=True).start()
 
-    def _orchestrate(self):
+    def _orchestrate(self, idioma_preferido, manter_legenda):
         tempo_total_inicio = time.time()
         total_arquivos = len(self.files)
         arquivos_sucesso = 0
@@ -312,10 +336,9 @@ class AppGui(ctk.CTk):
                 if eh_mkv:
                     if not ConfigManager.check_dependencies():
                         self.log("[AVISO] Processamento abortado. MKVToolNix não encontrado.")
-                        messagebox.showwarning("Erro", "O MKVToolNix não foi encontrado.")
+                        self.after(0, lambda: messagebox.showwarning("Erro", "O MKVToolNix não foi encontrado."))
                         break
                     
-                    idioma_preferido = self.entry_lang.get().strip()
                     self.log(f"[Etapa 1/3] Extração de Mídia via MKVToolNix (Idioma: {idioma_preferido or 'Qualquer'})")
                     arquivo_trabalho = MkvWrapper.extrair_legenda(origem, destino_dir, idioma_preferido, self.log)
 
@@ -340,9 +363,13 @@ class AppGui(ctk.CTk):
                     try:
                         if os.path.exists(arquivo_trabalho) and "_ORIGINAL" in arquivo_trabalho: 
                             os.remove(arquivo_trabalho)
-                        if os.path.exists(caminho_final_legenda): 
-                            os.remove(caminho_final_legenda)
-                        self.log("Lixo temporário de legendas limpo com sucesso.")
+                        
+                        if not manter_legenda:
+                            if os.path.exists(caminho_final_legenda): 
+                                os.remove(caminho_final_legenda)
+                            self.log("Lixo temporário de legendas limpo com sucesso.")
+                        else:
+                            self.log("Legenda traduzida mantida na pasta.")
                     except Exception as lim_e:
                         self.log(f"Aviso: Falha na limpeza: {lim_e}")
 
@@ -361,9 +388,9 @@ class AppGui(ctk.CTk):
         self.log(f"Tempo Total Gasto: {tempo_total_gasto}s")
         self.log("="*60)
         
-        self.btn_run.configure(state="normal")
-        self.btn_select.configure(state="normal")
-        winsound.Beep(1000, 500)
+        self.after(0, lambda: self.btn_run.configure(state="normal"))
+        self.after(0, lambda: self.btn_select.configure(state="normal"))
+        threading.Thread(target=lambda: winsound.Beep(1000, 500), daemon=True).start()
 
     def on_closing(self):
         self._is_running = False
