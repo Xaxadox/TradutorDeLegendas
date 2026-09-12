@@ -7,6 +7,7 @@ Uma ferramenta automatizada em Python com interface gráfica moderna para extra�
 * **Interface Gráfica Moderna:** Desenvolvida com `customtkinter`, oferecendo tema escuro nativo, acompanhamento visual de progresso e log de operações em tempo real.
 * **Automação MKV de Ponta a Ponta:** Extrai silenciosamente a trilha de legenda (`.ass` ou `.srt`) do vídeo original, traduz preservando todas as formatações e embute (muxing) o arquivo traduzido em um novo contêiner de vídeo sem perda de qualidade.
 * **Seletor de Idioma Preferido:** Ao processar vídeos com múltiplas faixas de legenda (ex: Inglês, Espanhol, Japonês), permite que você escolha qual idioma específico (ex: `eng`) deve ser extraído e traduzido.
+* **Preservação Opcional de Legendas:** Checkbox na interface que permite manter o arquivo da legenda traduzida externa (em `.ass` ou `.srt`) junto ao vídeo final, em vez de excluí-lo como lixo temporário.
 * **Parsing Robusto com Pysubs2:** A leitura das legendas é feita de forma segura utilizando a biblioteca oficial `pysubs2`, garantindo que tags de efeitos complexos (cores, posições na tela) de arquivos `.ass` não sejam corrompidas durante a tradução.
 * **Processamento em Lote (Batch Processing):** Permite selecionar múltiplos vídeos ou arquivos simultaneamente, processando-os em uma fila contínua à prova de falhas.
 * **Alta Performance (Async/Concorrência):** Utiliza `asyncio` e `ThreadPoolExecutor` para enviar lotes de texto em 5 threads simultâneas, reduzindo drasticamente o tempo de tradução.
