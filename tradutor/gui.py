@@ -12,8 +12,15 @@ except ImportError:
 ctk.set_appearance_mode("Dark")
 ctk.set_default_color_theme("blue")
 
+try:
+    from tkinterdnd2 import TkinterDnD, DND_FILES
+    HAS_DND = True
+except ImportError:
+    HAS_DND = False
 
-class AppGui(ctk.CTk):
+
+
+class AppGui(ctk.CTk, TkinterDnD.DnDWrapper if HAS_DND else object):
     """View layer: Interface gráfica pura.
 
     Responsável exclusivamente por renderizar widgets, capturar
@@ -23,6 +30,8 @@ class AppGui(ctk.CTk):
 
     def __init__(self):
         super().__init__()
+        if HAS_DND:
+            self.TkdndVersion = TkinterDnD._require(self)
         self.title("Tradutor Automático de Legendas (MKV/ASS/SRT)")
         self.geometry("750x550")
 
@@ -44,9 +53,17 @@ class AppGui(ctk.CTk):
         )
         self.lbl_title.pack(pady=(20, 10))
 
+        # Configura a janela inteira como área de soltar arquivos (Drag & Drop)
+        if HAS_DND:
+            self.drop_target_register(DND_FILES)
+            self.dnd_bind('<<Drop>>', self._on_files_dropped)
+            texto_botao = "Selecionar ou Arrastar Vídeos/Legendas para cá"
+        else:
+            texto_botao = "Selecionar Vídeos ou Legendas"
+
         self.btn_select = ctk.CTkButton(
-            self, text="Selecionar Vídeos ou Legendas",
-            command=self._select_files, width=250
+            self, text=texto_botao,
+            command=self._select_files, width=350, height=40, font=("Roboto", 14)
         )
         self.btn_select.pack(pady=10)
 
@@ -141,6 +158,26 @@ class AppGui(ctk.CTk):
             self.btn_run.configure(state="normal")
             if self._controller:
                 self._controller.on_files_selected(self.files)
+
+    def _on_files_dropped(self, event):
+        """Callback executado quando o usuário arrasta e solta arquivos."""
+        if not HAS_DND:
+            return
+            
+        arquivos = self.tk.splitlist(event.data)
+        extensoes_validas = ('.mkv', '.ass', '.srt', '.txt')
+        arquivos_validos = [f for f in arquivos if f.lower().endswith(extensoes_validas)]
+        
+        if arquivos_validos:
+            self.files = arquivos_validos
+            self.lbl_files.configure(
+                text=f"{len(self.files)} arquivo(s) arrastado(s)", text_color="#f39c12"
+            )
+            self.btn_run.configure(state="normal")
+            if self._controller:
+                self._controller.on_files_selected(self.files)
+        else:
+            messagebox.showwarning("Aviso", "Nenhum arquivo válido suportado (MKV/ASS/SRT).")
 
     def _on_start_clicked(self):
         if self._controller:

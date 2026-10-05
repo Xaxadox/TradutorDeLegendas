@@ -3,3 +3,4 @@ tqdm
 customtkinter
 pysubs2
 deep-translator==1.11.4
+tkinterdnd2==0.6.3

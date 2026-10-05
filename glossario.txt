@@ -1,0 +1,72 @@
+# ==============================================================================
+# DICIONÁRIO / GLOSSÁRIO ANTI-TRADUÇÃO (Focado em Animes)
+# ==============================================================================
+# O Google Translate costuma estragar nomes de magias e sufixos japoneses.
+# Adicione aqui palavras para blindá-las da tradução.
+#
+# Formato 1: Palavra Original = Palavra Destino
+# Formato 2: Apenas a Palavra (protege a palavra para continuar exatamente igual)
+# ==============================================================================
+
+# --- Honoríficos Japoneses ---
+san
+kun
+chan
+sama
+dono
+senpai
+sensei
+onii-chan
+onee-chan
+
+# --- Energias, Magias e Conceitos ---
+Jutsu
+Chakra
+Ki
+Nen
+Haki
+Cosmo
+Reiatsu
+Bankai
+Zanpakuto
+Shikai
+Kamehameha
+Rasengan
+Chidori
+Sharingan
+Byakugan
+Rinnegan
+Susanoo
+Amaterasu
+Genjutsu
+Taijutsu
+Ninjutsu
+Kekkei Genkai
+
+# --- Classes, Raças e Títulos ---
+Shinigami
+Hokage
+Kazekage
+Mizukage
+Raikage
+Tsuchikage
+Hashira
+Jonin
+Chunin
+Genin
+Saiyajin
+Super Saiyajin
+Espada
+Arrancar
+Quincy
+Nakama=Companheiro
+
+# --- Lugares Clássicos ---
+Konoha
+Soul Society
+Hueco Mundo
+Grand Line
+Wano
+Seireitei
+Gotei 13
+U.A.

@@ -8,6 +8,7 @@ import pysubs2
 from googletrans import Translator
 
 from .config import ConfigManager
+from .glossary import GlossaryManager
 
 
 class TranslatorService:
@@ -23,6 +24,7 @@ class TranslatorService:
         self._is_cancelled = is_cancelled_callback or (lambda: False)
         self._linhas_processadas = 0
         self._total_linhas = 0
+        self._glossary = GlossaryManager()
 
     def _traduzir_sync(self, translator, texto, src_lang="auto", dest_lang="pt", retries=ConfigManager.MAX_RETENTATIVAS):
         """Traduz um bloco de texto de forma síncrona, com retentativas exponenciais."""
@@ -74,13 +76,16 @@ class TranslatorService:
             textos_preparados.append(texto)
 
         bloco = "\n".join(textos_preparados)
+        bloco_protegido, mapeamento = self._glossary.apply_shield(bloco)
 
         async with semaforo:
             if self._is_cancelled():
                 return
             try:
-                traduzido = await loop.run_in_executor(executor, self._traduzir_sync, translator, bloco, src_lang, dest_lang)
-                frases = [f.strip() for f in traduzido.split("\n") if f.strip()]
+                traduzido = await loop.run_in_executor(executor, self._traduzir_sync, translator, bloco_protegido, src_lang, dest_lang)
+                traduzido_restaurado = self._glossary.remove_shield(traduzido, mapeamento)
+                
+                frases = [f.strip() for f in traduzido_restaurado.split("\n") if f.strip()]
                 frases_limpas = [self._limpar_quebras(f) for f in frases]
 
                 if len(frases_limpas) == len(lote_indices):
@@ -89,8 +94,10 @@ class TranslatorService:
                 else:
                     self._logger("[Aviso] Dessincronia no lote. Executando fallback sequencial...")
                     for idx, texto in zip(lote_indices, textos_preparados):
-                        r = await loop.run_in_executor(executor, self._traduzir_sync, translator, texto, src_lang, dest_lang)
-                        subs[idx].text = self._limpar_quebras(r)
+                        texto_protegido, map_seq = self._glossary.apply_shield(texto)
+                        r = await loop.run_in_executor(executor, self._traduzir_sync, translator, texto_protegido, src_lang, dest_lang)
+                        r_restaurado = self._glossary.remove_shield(r, map_seq)
+                        subs[idx].text = self._limpar_quebras(r_restaurado)
                         await asyncio.sleep(0.5)
             except Exception as e:
                 self._logger(f"[Erro Crítico] Lote ignorado. Motivo: {e}")
