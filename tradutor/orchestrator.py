@@ -26,12 +26,12 @@ class TranslationOrchestrator:
         self._callbacks['ask_overwrite'] = ask_overwrite_cb
         self._callbacks['finish'] = finish_cb
 
-    def start(self, files, idioma_preferido, manter_legenda):
+    def start(self, files, idioma_origem, idioma_destino, manter_legenda):
         """Inicia o processamento em lote em uma thread separada."""
         self._is_running = True
         threading.Thread(
             target=self._process_files,
-            args=(files, idioma_preferido, manter_legenda),
+            args=(files, idioma_origem, idioma_destino, manter_legenda),
             daemon=True
         ).start()
 
@@ -39,7 +39,7 @@ class TranslationOrchestrator:
         """Sinaliza para interromper o processamento."""
         self._is_running = False
 
-    def _process_files(self, files, idioma_preferido, manter_legenda):
+    def _process_files(self, files, idioma_origem, idioma_destino, manter_legenda):
         """Loop principal de processamento em lote."""
         log = self._callbacks.get('log', print)
         ask_overwrite = self._callbacks.get('ask_overwrite', lambda x: False)
@@ -63,7 +63,7 @@ class TranslationOrchestrator:
                 log(f"\n--- Arquivo [{index}/{total_arquivos}]: {os.path.basename(origem)} ---")
 
                 resultado = self._processar_arquivo(
-                    origem, idioma_preferido, manter_legenda,
+                    origem, idioma_origem, idioma_destino, manter_legenda,
                     log, update_progress, ask_overwrite
                 )
 
@@ -85,7 +85,7 @@ class TranslationOrchestrator:
 
         on_finish()
 
-    def _processar_arquivo(self, origem, idioma_preferido, manter_legenda, log, update_progress, ask_overwrite):
+    def _processar_arquivo(self, origem, idioma_origem, idioma_destino, manter_legenda, log, update_progress, ask_overwrite):
         """Processa um único arquivo (legenda ou MKV).
 
         Returns:
@@ -100,14 +100,14 @@ class TranslationOrchestrator:
                 log("[AVISO] Processamento abortado. MKVToolNix não encontrado.")
                 return False
 
-            log(f"[Etapa 1/3] Extração de Mídia via MKVToolNix (Idioma: {idioma_preferido or 'Qualquer'})")
-            arquivo_trabalho = MkvWrapper.extrair_legenda(origem, destino_dir, idioma_preferido, log)
+            log(f"[Etapa 1/3] Extração de Mídia via MKVToolNix (Idioma: {idioma_origem or 'Qualquer'})")
+            arquivo_trabalho = MkvWrapper.extrair_legenda(origem, destino_dir, idioma_origem, log)
 
         nome_base = os.path.basename(arquivo_trabalho)
         extensao = nome_base.rsplit('.', 1)[-1]
         nome_sem_ext = nome_base.rsplit('.', 1)[0].replace("_ORIGINAL", "")
-        caminho_final_legenda = os.path.join(destino_dir, f"{nome_sem_ext}_PTBR.{extensao}")
-        caminho_mkv_saida = os.path.join(destino_dir, f"{nome_sem_ext}_PTBR.mkv") if eh_mkv else None
+        caminho_final_legenda = os.path.join(destino_dir, f"{nome_sem_ext}_{idioma_destino.upper()}.{extensao}")
+        caminho_mkv_saida = os.path.join(destino_dir, f"{nome_sem_ext}_{idioma_destino.upper()}.mkv") if eh_mkv else None
 
         # Verificar conflito de nomes
         if not self._verificar_conflito(eh_mkv, caminho_final_legenda, caminho_mkv_saida,
@@ -118,8 +118,15 @@ class TranslationOrchestrator:
         etapa_trad = "2/3" if eh_mkv else "1/1"
         log(f"[Etapa {etapa_trad}] Tradução via Google Translate (Pysubs2)")
 
-        translator_svc = TranslatorService(logger=log, progress_callback=update_progress)
-        asyncio.run(translator_svc.pipeline(arquivo_trabalho, caminho_final_legenda, idioma_preferido))
+        translator_svc = TranslatorService(
+            logger=log, 
+            progress_callback=update_progress, 
+            is_cancelled_callback=lambda: not self._is_running
+        )
+        asyncio.run(translator_svc.pipeline(arquivo_trabalho, caminho_final_legenda, idioma_origem, idioma_destino))
+        
+        if not self._is_running:
+            return False
 
         # Multiplexação e limpeza (somente MKV)
         if eh_mkv:

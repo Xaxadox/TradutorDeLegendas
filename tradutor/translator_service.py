@@ -17,17 +17,18 @@ class TranslatorService:
     quando a API retorna quantidade inconsistente de linhas.
     """
 
-    def __init__(self, logger, progress_callback):
+    def __init__(self, logger, progress_callback, is_cancelled_callback=None):
         self._logger = logger
         self._progress_callback = progress_callback
+        self._is_cancelled = is_cancelled_callback or (lambda: False)
         self._linhas_processadas = 0
         self._total_linhas = 0
 
-    def _traduzir_sync(self, translator, texto, src_lang="auto", retries=ConfigManager.MAX_RETENTATIVAS):
+    def _traduzir_sync(self, translator, texto, src_lang="auto", dest_lang="pt", retries=ConfigManager.MAX_RETENTATIVAS):
         """Traduz um bloco de texto de forma síncrona, com retentativas exponenciais."""
         for tentativa in range(retries):
             try:
-                return translator.translate(texto, src=src_lang, dest="pt").text
+                return translator.translate(texto, src=src_lang, dest=dest_lang).text
             except (TypeError, ValueError, AttributeError) as e:
                 # Erros estruturais ou de parsing do googletrans costumam ser permanentes
                 # (ex: IP bloqueado retornando HTML em vez de JSON ou dados inválidos)
@@ -58,8 +59,11 @@ class TranslatorService:
         }
         return mapa.get(iso_639_2.lower(), "auto")
 
-    async def _traduzir_lote(self, executor, semaforo, lote_indices, subs, pbar_lock, src_lang="auto"):
+    async def _traduzir_lote(self, executor, semaforo, lote_indices, subs, pbar_lock, src_lang="auto", dest_lang="pt"):
         """Traduz um lote de linhas de legenda de forma assíncrona."""
+        if self._is_cancelled():
+            return
+
         loop = asyncio.get_running_loop()
         translator = Translator()
 
@@ -72,8 +76,10 @@ class TranslatorService:
         bloco = "\n".join(textos_preparados)
 
         async with semaforo:
+            if self._is_cancelled():
+                return
             try:
-                traduzido = await loop.run_in_executor(executor, self._traduzir_sync, translator, bloco, src_lang)
+                traduzido = await loop.run_in_executor(executor, self._traduzir_sync, translator, bloco, src_lang, dest_lang)
                 frases = [f.strip() for f in traduzido.split("\n") if f.strip()]
                 frases_limpas = [self._limpar_quebras(f) for f in frases]
 
@@ -83,7 +89,7 @@ class TranslatorService:
                 else:
                     self._logger("[Aviso] Dessincronia no lote. Executando fallback sequencial...")
                     for idx, texto in zip(lote_indices, textos_preparados):
-                        r = await loop.run_in_executor(executor, self._traduzir_sync, translator, texto, src_lang)
+                        r = await loop.run_in_executor(executor, self._traduzir_sync, translator, texto, src_lang, dest_lang)
                         subs[idx].text = self._limpar_quebras(r)
                         await asyncio.sleep(0.5)
             except Exception as e:
@@ -95,7 +101,7 @@ class TranslatorService:
             self._linhas_processadas += len(lote_indices)
             self._progress_callback(self._linhas_processadas, self._total_linhas)
 
-    async def pipeline(self, origem, destino, idioma_preferido="auto"):
+    async def pipeline(self, origem, destino, idioma_preferido="auto", idioma_destino="pt"):
         """Pipeline completo: carrega legenda, traduz todos os lotes e salva.
 
         Args:
@@ -127,8 +133,12 @@ class TranslatorService:
         pbar_lock = threading.Lock()
 
         with ThreadPoolExecutor(max_workers=ConfigManager.MAX_CONCORRENTE) as executor:
-            tasks = [self._traduzir_lote(executor, semaforo, lote, subs, pbar_lock, src_lang) for lote in lotes]
+            tasks = [self._traduzir_lote(executor, semaforo, lote, subs, pbar_lock, src_lang, idioma_destino) for lote in lotes]
             await asyncio.gather(*tasks)
+
+        if self._is_cancelled():
+            self._logger("[AVISO] Tradução abortada pelo usuário.")
+            return
 
         self._logger("Salvando arquivo de legendas traduzido...")
         subs.save(destino)

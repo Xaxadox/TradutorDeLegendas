@@ -76,7 +76,7 @@ def rodar_teste():
         
         # Reinicia a flag e inicia o processamento
         model._is_running = True
-        model.start([origem], idioma_preferido=idioma_pref, manter_legenda=True)
+        model.start([origem], idioma_origem=idioma_pref, idioma_destino="pt", manter_legenda=True)
         
         while model._is_running:
             time.sleep(1)

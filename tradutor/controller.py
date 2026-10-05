@@ -17,10 +17,14 @@ class AppController:
             finish_cb=self._view.on_processing_finished
         )
 
-    def start_translation(self, files, idioma, manter_legenda):
+    def start_translation(self, files, idioma_origem, idioma_destino, manter_legenda):
         """Prepara a interface e dispara o processamento."""
         self._view.prepare_for_processing()
-        self._model.start(files, idioma, manter_legenda)
+        self._model.start(files, idioma_origem, idioma_destino, manter_legenda)
+
+    def cancel_translation(self):
+        """Pede ao orquestrador para interromper a fila de traduções."""
+        self._model.stop()
 
     def on_files_selected(self, files):
         """Varre arquivos MKV de forma assíncrona em busca de idiomas."""

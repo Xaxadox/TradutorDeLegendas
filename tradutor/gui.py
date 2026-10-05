@@ -77,6 +77,17 @@ class AppGui(ctk.CTk):
         self.combo_lang = ctk.CTkOptionMenu(self.frame_options, values=["auto"], width=100)
         self.combo_lang.pack(side="left", padx=(0, 10), pady=5)
 
+        ctk.CTkLabel(
+            self.frame_options, text="Destino:"
+        ).pack(side="left", padx=(10, 5), pady=5)
+
+        self.combo_lang_dest = ctk.CTkOptionMenu(
+            self.frame_options, 
+            values=["pt", "en", "es", "fr", "de", "it", "ru", "ja", "ko", "zh-cn"], 
+            width=80
+        )
+        self.combo_lang_dest.pack(side="left", padx=(0, 10), pady=5)
+
         self.var_manter_legenda = ctk.BooleanVar(value=False)
         ctk.CTkCheckBox(
             self.frame_options, text="Manter legenda externa",
@@ -92,7 +103,13 @@ class AppGui(ctk.CTk):
             command=self._on_start_clicked, state="disabled",
             fg_color="green", hover_color="darkgreen", width=250
         )
-        self.btn_run.pack()
+        self.btn_run.pack(side="left", padx=5)
+
+        self.btn_cancelar = ctk.CTkButton(
+            self.frame_botoes, text="✖ Cancelar",
+            command=self._on_cancel_clicked,
+            fg_color="#c0392b", hover_color="#96281b", width=120
+        )
 
         self.btn_novos = ctk.CTkButton(
             self.frame_botoes, text="🔄 Traduzir Outros Arquivos",
@@ -127,9 +144,15 @@ class AppGui(ctk.CTk):
 
     def _on_start_clicked(self):
         if self._controller:
-            idioma = self.combo_lang.get().strip()
+            idioma_origem = self.combo_lang.get().strip()
+            idioma_destino = self.combo_lang_dest.get().strip()
             manter = self.var_manter_legenda.get()
-            self._controller.start_translation(self.files, idioma, manter)
+            self._controller.start_translation(self.files, idioma_origem, idioma_destino, manter)
+
+    def _on_cancel_clicked(self):
+        if self._controller:
+            self._controller.cancel_translation()
+            self.btn_cancelar.configure(state="disabled", text="Cancelando...")
 
     def _on_closing_request(self):
         if self._controller:
@@ -141,7 +164,9 @@ class AppGui(ctk.CTk):
 
     def prepare_for_processing(self):
         """Prepara a UI para o início do processamento."""
-        self.btn_run.configure(state="disabled")
+        self.btn_run.pack_forget()
+        self.btn_cancelar.configure(state="normal", text="✖ Cancelar")
+        self.btn_cancelar.pack(side="left", padx=5)
         self.btn_select.configure(state="disabled")
         self.progressbar.set(0)
         self.textbox.configure(state="normal")
@@ -194,6 +219,7 @@ class AppGui(ctk.CTk):
         """Atualiza a UI após o término do processamento."""
         def _update_ui():
             self.btn_run.pack_forget()
+            self.btn_cancelar.pack_forget()
             self.btn_novos.pack(side="left", padx=10)
             self.btn_encerrar.pack(side="left", padx=10)
             self.btn_select.configure(state="normal")
@@ -212,7 +238,8 @@ class AppGui(ctk.CTk):
         """Reseta a interface para o estado inicial e abre o seletor de arquivos."""
         self.btn_novos.pack_forget()
         self.btn_encerrar.pack_forget()
-        self.btn_run.pack()
+        self.btn_cancelar.pack_forget()
+        self.btn_run.pack(side="left", padx=5)
         self.btn_run.configure(state="disabled")
         self.lbl_files.configure(text="Nenhum arquivo selecionado", text_color="gray")
         self.progressbar.set(0)
