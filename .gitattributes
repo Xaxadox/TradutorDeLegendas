@@ -59,5 +59,9 @@
 #*.DOT   diff=astextplain
 #*.pdf   diff=astextplain
 #*.PDF   diff=astextplain
-#*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+###############################################################################
+# Github Linguist (Stats Override)
+###############################################################################
+mkvtoolnix/** linguist-vendored
