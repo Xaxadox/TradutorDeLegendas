@@ -2,29 +2,35 @@ import os
 import json
 import subprocess
 
-from .config import ConfigManager
+from .config import GerenciadorConfig
 from .idiomas import Idiomas
 
 
-class MkvWrapper:
+class ManipuladorMkv:
     """Encapsula operações de extração e multiplexação de legendas em arquivos MKV."""
 
     @staticmethod
     def _detectar_formato(codec, codec_id):
         """Retorna a extensão do formato de legenda ou None se não for suportado."""
-        if "ass" in codec or "substation" in codec or "s_text/ass" in codec_id:
-            return ".ass"
-        elif "srt" in codec or "s_text/utf8" in codec_id:
-            return ".srt"
+        # Tabela Data-Driven: Extensão -> Lista de identificadores
+        formatos = {
+            ".ass": ["ass", "substation", "s_text/ass"],
+            ".srt": ["srt", "s_text/utf8"]
+        }
+        
+        texto_busca = f"{codec} {codec_id}".lower()
+        for ext, palavras_chave in formatos.items():
+            if any(palavra in texto_busca for palavra in palavras_chave):
+                return ext
         return None
 
     @staticmethod
     def listar_idiomas_legendas(caminhos_mkv):
         """Retorna uma lista de idiomas únicos encontrados nos arquivos MKV fornecidos."""
-        if not ConfigManager.check_dependencies():
+        if not GerenciadorConfig.check_dependencies():
             return []
             
-        mkvmerge, _ = ConfigManager.get_mkv_bins()
+        mkvmerge, _ = GerenciadorConfig.get_mkv_bins()
         idiomas = set()
         
         for mkv in caminhos_mkv:
@@ -41,7 +47,7 @@ class MkvWrapper:
                     if track.get("type") == "subtitles":
                         codec = track.get("codec", "").lower()
                         codec_id = track.get("properties", {}).get("codec_id", "").lower()
-                        if MkvWrapper._detectar_formato(codec, codec_id):
+                        if ManipuladorMkv._detectar_formato(codec, codec_id):
                             lang = track.get("properties", {}).get("language", "und").lower()
                             idiomas.add(lang)
             except Exception:
@@ -68,7 +74,7 @@ class MkvWrapper:
             RuntimeError: Se não conseguir ler o MKV.
             ValueError: Se nenhuma legenda suportada for encontrada.
         """
-        mkvmerge, mkvextract = ConfigManager.get_mkv_bins()
+        mkvmerge, mkvextract = GerenciadorConfig.get_mkv_bins()
         logger("Analisando estrutura do vídeo MKV...")
 
         comando_info = [mkvmerge, "-J", caminho_mkv]
@@ -81,7 +87,7 @@ class MkvWrapper:
         except Exception as e:
             raise RuntimeError(f"Erro ao ler MKV (Verifique dependências): {e}")
 
-        track_id, selected_ext, idioma_real = MkvWrapper._selecionar_trilha(info, idioma_preferido)
+        track_id, selected_ext, idioma_real = ManipuladorMkv._selecionar_trilha(info, idioma_preferido)
 
         if track_id is None:
             raise ValueError("Nenhuma legenda (.ass ou .srt) encontrada neste MKV.")
@@ -122,7 +128,7 @@ class MkvWrapper:
             codec_id = track.get("properties", {}).get("codec_id", "").lower()
             lang = track.get("properties", {}).get("language", "und").lower() or "und"
 
-            ext = MkvWrapper._detectar_formato(codec, codec_id)
+            ext = ManipuladorMkv._detectar_formato(codec, codec_id)
             if ext is None:
                 continue
 
@@ -159,7 +165,7 @@ class MkvWrapper:
         Raises:
             RuntimeError: Se o mkvmerge falhar.
         """
-        mkvmerge, _ = ConfigManager.get_mkv_bins()
+        mkvmerge, _ = GerenciadorConfig.get_mkv_bins()
         codigo_mkv, nome_trilha = Idiomas.destino_para_mkv(idioma_destino)
 
         logger(f"Criando novo contêiner de vídeo ({os.path.basename(caminho_saida)})...")

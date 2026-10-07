@@ -1,14 +1,14 @@
 """Tradutor Automático de Legendas (MKV/ASS/SRT) — Ponto de Entrada."""
 
-from tradutor.orchestrator import TranslationOrchestrator
-from tradutor.controller import AppController
-from tradutor.gui import AppGui
+from tradutor.orquestrador import OrquestradorTraducoes
+from tradutor.controlador import ControladorApp
+from tradutor.interface import InterfaceGrafica
 
 
 def main():
-    model = TranslationOrchestrator()
-    view = AppGui()
-    AppController(view, model)
+    model = OrquestradorTraducoes()
+    view = InterfaceGrafica()
+    ControladorApp(view, model)
     view.mainloop()
 
 

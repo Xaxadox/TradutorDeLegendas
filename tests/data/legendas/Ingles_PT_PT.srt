@@ -1,10 +1,10 @@
 1
 00:00:00,000 --> 00:00:03,000
-A inteligência artificial está transformando a maneira como interagimos com o mundo digital.(Linha 1)
+A inteligência artificial está transformando a forma como interagimos com o mundo digital.(Linha 1)
 
 2
 00:00:04,000 --> 00:00:07,000
-É uau!Sinceramente, não consigo acreditar.(Linha 2)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 2)
 
 3
 00:00:08,000 --> 00:00:11,000
@@ -16,7 +16,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 4)
 
 5
 00:00:16,000 --> 00:00:19,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 5)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 5)
 
 6
 00:00:20,000 --> 00:00:23,000
@@ -24,7 +24,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 6)
 
 7
 00:00:24,000 --> 00:00:27,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 7)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 7)
 
 8
 00:00:28,000 --> 00:00:31,000
@@ -32,11 +32,11 @@ Está chovendo muito, acho que vou cancelar meu voo para Paris.(Linha 8)
 
 9
 00:00:32,000 --> 00:00:35,000
-A inteligência artificial está transformando a maneira como interagimos com o mundo digital.(Linha 9)
+A inteligência artificial está transformando a forma como interagimos com o mundo digital.(Linha 9)
 
 10
 00:00:36,000 --> 00:00:39,000
-É uau!Sinceramente, não consigo acreditar.(Linha 10)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 10)
 
 11
 00:00:40,000 --> 00:00:43,000
@@ -48,7 +48,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 12)
 
 13
 00:00:48,000 --> 00:00:51,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 13)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 13)
 
 14
 00:00:52,000 --> 00:00:55,000
@@ -56,7 +56,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 14)
 
 15
 00:00:56,000 --> 00:00:59,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 15)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 15)
 
 16
 00:01:00,000 --> 00:01:03,000
@@ -68,7 +68,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 18
 00:01:08,000 --> 00:01:11,000
-É uau!Sinceramente, não consigo acreditar.(Linha 18)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 18)
 
 19
 00:01:12,000 --> 00:01:15,000
@@ -80,7 +80,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 20)
 
 21
 00:01:20,000 --> 00:01:23,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 21)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 21)
 
 22
 00:01:24,000 --> 00:01:27,000
@@ -88,7 +88,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 22)
 
 23
 00:01:28,000 --> 00:01:31,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 23)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 23)
 
 24
 00:01:32,000 --> 00:01:35,000
@@ -96,11 +96,11 @@ Está chovendo muito, acho que vou cancelar meu voo para Paris.(Linha 24)
 
 25
 00:01:36,000 --> 00:01:39,000
-A inteligência artificial está transformando a maneira como interagimos com o mundo digital.(Linha 25)
+A inteligência artificial está transformando a forma como interagimos com o mundo digital.(Linha 25)
 
 26
 00:01:40,000 --> 00:01:43,000
-É uau!Sinceramente, não consigo acreditar.(Linha 26)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 26)
 
 27
 00:01:44,000 --> 00:01:47,000
@@ -112,7 +112,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 28)
 
 29
 00:01:52,000 --> 00:01:55,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 29)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 29)
 
 30
 00:01:56,000 --> 00:01:59,000
@@ -120,7 +120,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 30)
 
 31
 00:02:00,000 --> 00:02:03,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 31)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 31)
 
 32
 00:02:04,000 --> 00:02:07,000
@@ -132,7 +132,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 34
 00:02:12,000 --> 00:02:15,000
-É uau!Sinceramente, não consigo acreditar.(Linha 34)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 34)
 
 35
 00:02:16,000 --> 00:02:19,000
@@ -144,7 +144,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 36)
 
 37
 00:02:24,000 --> 00:02:27,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 37)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 37)
 
 38
 00:02:28,000 --> 00:02:31,000
@@ -152,7 +152,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 38)
 
 39
 00:02:32,000 --> 00:02:35,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 39)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 39)
 
 40
 00:02:36,000 --> 00:02:39,000
@@ -164,7 +164,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 42
 00:02:44,000 --> 00:02:47,000
-É uau!Sinceramente, não consigo acreditar.(Linha 42)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 42)
 
 43
 00:02:48,000 --> 00:02:51,000
@@ -176,7 +176,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 44)
 
 45
 00:02:56,000 --> 00:02:59,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 45)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 45)
 
 46
 00:03:00,000 --> 00:03:03,000
@@ -184,7 +184,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 46)
 
 47
 00:03:04,000 --> 00:03:07,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 47)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 47)
 
 48
 00:03:08,000 --> 00:03:11,000
@@ -192,11 +192,11 @@ Está chovendo muito, acho que vou cancelar meu voo para Paris.(Linha 48)
 
 49
 00:03:12,000 --> 00:03:15,000
-A inteligência artificial está transformando a maneira como interagimos com o mundo digital.(Linha 49)
+A inteligência artificial está transformando a forma como interagimos com o mundo digital.(Linha 49)
 
 50
 00:03:16,000 --> 00:03:19,000
-É uau!Sinceramente, não consigo acreditar.(Linha 50)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 50)
 
 51
 00:03:20,000 --> 00:03:23,000
@@ -208,7 +208,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 52)
 
 53
 00:03:28,000 --> 00:03:31,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 53)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 53)
 
 54
 00:03:32,000 --> 00:03:35,000
@@ -216,7 +216,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 54)
 
 55
 00:03:36,000 --> 00:03:39,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 55)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 55)
 
 56
 00:03:40,000 --> 00:03:43,000
@@ -224,11 +224,11 @@ Está chovendo muito, acho que vou cancelar meu voo para Paris.(Linha 56)
 
 57
 00:03:44,000 --> 00:03:47,000
-A inteligência artificial está transformando a maneira como interagimos com o mundo digital.(Linha 57)
+A inteligência artificial está transformando a forma como interagimos com o mundo digital.(Linha 57)
 
 58
 00:03:48,000 --> 00:03:51,000
-É uau!Sinceramente, não consigo acreditar.(Linha 58)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 58)
 
 59
 00:03:52,000 --> 00:03:55,000
@@ -240,7 +240,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 60)
 
 61
 00:04:00,000 --> 00:04:03,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 61)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 61)
 
 62
 00:04:04,000 --> 00:04:07,000
@@ -248,7 +248,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 62)
 
 63
 00:04:08,000 --> 00:04:11,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 63)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 63)
 
 64
 00:04:12,000 --> 00:04:15,000
@@ -260,7 +260,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 66
 00:04:20,000 --> 00:04:23,000
-É uau!Sinceramente, não consigo acreditar.(Linha 66)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 66)
 
 67
 00:04:24,000 --> 00:04:27,000
@@ -272,7 +272,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 68)
 
 69
 00:04:32,000 --> 00:04:35,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 69)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 69)
 
 70
 00:04:36,000 --> 00:04:39,000
@@ -280,7 +280,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 70)
 
 71
 00:04:40,000 --> 00:04:43,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 71)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 71)
 
 72
 00:04:44,000 --> 00:04:47,000
@@ -288,11 +288,11 @@ Está chovendo muito, acho que vou cancelar meu voo para Paris.(Linha 72)
 
 73
 00:04:48,000 --> 00:04:51,000
-A inteligência artificial está transformando a maneira como interagimos com o mundo digital.(Linha 73)
+A inteligência artificial está transformando a forma como interagimos com o mundo digital.(Linha 73)
 
 74
 00:04:52,000 --> 00:04:55,000
-É uau!Sinceramente, não consigo acreditar.(Linha 74)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 74)
 
 75
 00:04:56,000 --> 00:04:59,000
@@ -304,7 +304,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 76)
 
 77
 00:05:04,000 --> 00:05:07,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 77)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 77)
 
 78
 00:05:08,000 --> 00:05:11,000
@@ -312,7 +312,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 78)
 
 79
 00:05:12,000 --> 00:05:15,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 79)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 79)
 
 80
 00:05:16,000 --> 00:05:19,000
@@ -324,7 +324,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 82
 00:05:24,000 --> 00:05:27,000
-É uau!Sinceramente, não consigo acreditar.(Linha 82)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 82)
 
 83
 00:05:28,000 --> 00:05:31,000
@@ -336,7 +336,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 84)
 
 85
 00:05:36,000 --> 00:05:39,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 85)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 85)
 
 86
 00:05:40,000 --> 00:05:43,000
@@ -344,7 +344,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 86)
 
 87
 00:05:44,000 --> 00:05:47,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 87)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 87)
 
 88
 00:05:48,000 --> 00:05:51,000
@@ -356,7 +356,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 90
 00:05:56,000 --> 00:05:59,000
-É uau!Sinceramente, não consigo acreditar.(Linha 90)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 90)
 
 91
 00:06:00,000 --> 00:06:03,000
@@ -368,7 +368,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 92)
 
 93
 00:06:08,000 --> 00:06:11,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 93)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 93)
 
 94
 00:06:12,000 --> 00:06:15,000
@@ -376,7 +376,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 94)
 
 95
 00:06:16,000 --> 00:06:19,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 95)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 95)
 
 96
 00:06:20,000 --> 00:06:23,000
@@ -388,7 +388,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 98
 00:06:28,000 --> 00:06:31,000
-É uau!Sinceramente, não consigo acreditar.(Linha 98)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 98)
 
 99
 00:06:32,000 --> 00:06:35,000
@@ -400,7 +400,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 100)
 
 101
 00:06:40,000 --> 00:06:43,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 101)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 101)
 
 102
 00:06:44,000 --> 00:06:47,000
@@ -408,7 +408,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 102
 
 103
 00:06:48,000 --> 00:06:51,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 103)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 103)
 
 104
 00:06:52,000 --> 00:06:55,000
@@ -420,7 +420,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 106
 00:07:00,000 --> 00:07:03,000
-É uau!Sinceramente, não consigo acreditar.(Linha 106)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 106)
 
 107
 00:07:04,000 --> 00:07:07,000
@@ -432,7 +432,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 108)
 
 109
 00:07:12,000 --> 00:07:15,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 109)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 109)
 
 110
 00:07:16,000 --> 00:07:19,000
@@ -440,7 +440,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 110
 
 111
 00:07:20,000 --> 00:07:23,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 111)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 111)
 
 112
 00:07:24,000 --> 00:07:27,000
@@ -452,7 +452,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 114
 00:07:32,000 --> 00:07:35,000
-É uau!Sinceramente, não consigo acreditar.(Linha 114)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 114)
 
 115
 00:07:36,000 --> 00:07:39,000
@@ -464,7 +464,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 116)
 
 117
 00:07:44,000 --> 00:07:47,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 117)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 117)
 
 118
 00:07:48,000 --> 00:07:51,000
@@ -472,7 +472,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 118
 
 119
 00:07:52,000 --> 00:07:55,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 119)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 119)
 
 120
 00:07:56,000 --> 00:07:59,000
@@ -480,11 +480,11 @@ Está chovendo muito, acho que vou cancelar meu voo para Paris.(Linha 120)
 
 121
 00:08:00,000 --> 00:08:03,000
-A inteligência artificial está transformando a maneira como interagimos com o mundo digital.(Linha 121)
+A inteligência artificial está transformando a forma como interagimos com o mundo digital.(Linha 121)
 
 122
 00:08:04,000 --> 00:08:07,000
-É uau!Sinceramente, não consigo acreditar.(Linha 122)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 122)
 
 123
 00:08:08,000 --> 00:08:11,000
@@ -496,7 +496,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 124)
 
 125
 00:08:16,000 --> 00:08:19,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 125)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 125)
 
 126
 00:08:20,000 --> 00:08:23,000
@@ -504,7 +504,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 126
 
 127
 00:08:24,000 --> 00:08:27,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 127)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 127)
 
 128
 00:08:28,000 --> 00:08:31,000
@@ -512,11 +512,11 @@ Está chovendo muito, acho que vou cancelar meu voo para Paris.(Linha 128)
 
 129
 00:08:32,000 --> 00:08:35,000
-A inteligência artificial está transformando a maneira como interagimos com o mundo digital.(Linha 129)
+A inteligência artificial está transformando a forma como interagimos com o mundo digital.(Linha 129)
 
 130
 00:08:36,000 --> 00:08:39,000
-É uau!Sinceramente, não consigo acreditar.(Linha 130)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 130)
 
 131
 00:08:40,000 --> 00:08:43,000
@@ -528,7 +528,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 132)
 
 133
 00:08:48,000 --> 00:08:51,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 133)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 133)
 
 134
 00:08:52,000 --> 00:08:55,000
@@ -536,7 +536,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 134
 
 135
 00:08:56,000 --> 00:08:59,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 135)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 135)
 
 136
 00:09:00,000 --> 00:09:03,000
@@ -544,11 +544,11 @@ Está chovendo muito, acho que vou cancelar meu voo para Paris.(Linha 136)
 
 137
 00:09:04,000 --> 00:09:07,000
-A inteligência artificial está transformando a maneira como interagimos com o mundo digital.(Linha 137)
+A inteligência artificial está transformando a forma como interagimos com o mundo digital.(Linha 137)
 
 138
 00:09:08,000 --> 00:09:11,000
-É uau!Sinceramente, não consigo acreditar.(Linha 138)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 138)
 
 139
 00:09:12,000 --> 00:09:15,000
@@ -560,7 +560,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 140)
 
 141
 00:09:20,000 --> 00:09:23,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 141)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 141)
 
 142
 00:09:24,000 --> 00:09:27,000
@@ -568,7 +568,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 142
 
 143
 00:09:28,000 --> 00:09:31,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 143)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 143)
 
 144
 00:09:32,000 --> 00:09:35,000
@@ -576,11 +576,11 @@ Está chovendo muito, acho que vou cancelar meu voo para Paris.(Linha 144)
 
 145
 00:09:36,000 --> 00:09:39,000
-A inteligência artificial está transformando a maneira como interagimos com o mundo digital.(Linha 145)
+A inteligência artificial está transformando a forma como interagimos com o mundo digital.(Linha 145)
 
 146
 00:09:40,000 --> 00:09:43,000
-É uau!Sinceramente, não consigo acreditar.(Linha 146)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 146)
 
 147
 00:09:44,000 --> 00:09:47,000
@@ -592,7 +592,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 148)
 
 149
 00:09:52,000 --> 00:09:55,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 149)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 149)
 
 150
 00:09:56,000 --> 00:09:59,000
@@ -600,7 +600,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 150
 
 151
 00:10:00,000 --> 00:10:03,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 151)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 151)
 
 152
 00:10:04,000 --> 00:10:07,000
@@ -608,11 +608,11 @@ Está chovendo muito, acho que vou cancelar meu voo para Paris.(Linha 152)
 
 153
 00:10:08,000 --> 00:10:11,000
-A inteligência artificial está transformando a maneira como interagimos com o mundo digital.(Linha 153)
+A inteligência artificial está transformando a forma como interagimos com o mundo digital.(Linha 153)
 
 154
 00:10:12,000 --> 00:10:15,000
-É uau!Sinceramente, não consigo acreditar.(Linha 154)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 154)
 
 155
 00:10:16,000 --> 00:10:19,000
@@ -624,7 +624,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 156)
 
 157
 00:10:24,000 --> 00:10:27,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 157)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 157)
 
 158
 00:10:28,000 --> 00:10:31,000
@@ -632,7 +632,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 158
 
 159
 00:10:32,000 --> 00:10:35,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 159)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 159)
 
 160
 00:10:36,000 --> 00:10:39,000
@@ -640,11 +640,11 @@ Está chovendo muito, acho que vou cancelar meu voo para Paris.(Linha 160)
 
 161
 00:10:40,000 --> 00:10:43,000
-A inteligência artificial está transformando a maneira como interagimos com o mundo digital.(Linha 161)
+A inteligência artificial está transformando a forma como interagimos com o mundo digital.(Linha 161)
 
 162
 00:10:44,000 --> 00:10:47,000
-É uau!Sinceramente, não consigo acreditar.(Linha 162)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 162)
 
 163
 00:10:48,000 --> 00:10:51,000
@@ -656,7 +656,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 164)
 
 165
 00:10:56,000 --> 00:10:59,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 165)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 165)
 
 166
 00:11:00,000 --> 00:11:03,000
@@ -664,7 +664,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 166
 
 167
 00:11:04,000 --> 00:11:07,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 167)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 167)
 
 168
 00:11:08,000 --> 00:11:11,000
@@ -672,11 +672,11 @@ Está chovendo muito, acho que vou cancelar meu voo para Paris.(Linha 168)
 
 169
 00:11:12,000 --> 00:11:15,000
-A inteligência artificial está transformando a maneira como interagimos com o mundo digital.(Linha 169)
+A inteligência artificial está transformando a forma como interagimos com o mundo digital.(Linha 169)
 
 170
 00:11:16,000 --> 00:11:19,000
-É uau!Sinceramente, não consigo acreditar.(Linha 170)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 170)
 
 171
 00:11:20,000 --> 00:11:23,000
@@ -688,7 +688,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 172)
 
 173
 00:11:28,000 --> 00:11:31,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 173)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 173)
 
 174
 00:11:32,000 --> 00:11:35,000
@@ -696,7 +696,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 174
 
 175
 00:11:36,000 --> 00:11:39,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 175)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 175)
 
 176
 00:11:40,000 --> 00:11:43,000
@@ -704,11 +704,11 @@ Está chovendo muito, acho que vou cancelar meu voo para Paris.(Linha 176)
 
 177
 00:11:44,000 --> 00:11:47,000
-A inteligência artificial está transformando a maneira como interagimos com o mundo digital.(Linha 177)
+A inteligência artificial está transformando a forma como interagimos com o mundo digital.(Linha 177)
 
 178
 00:11:48,000 --> 00:11:51,000
-É uau!Sinceramente, não consigo acreditar.(Linha 178)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 178)
 
 179
 00:11:52,000 --> 00:11:55,000
@@ -720,7 +720,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 180)
 
 181
 00:12:00,000 --> 00:12:03,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 181)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 181)
 
 182
 00:12:04,000 --> 00:12:07,000
@@ -728,7 +728,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 182
 
 183
 00:12:08,000 --> 00:12:11,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 183)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 183)
 
 184
 00:12:12,000 --> 00:12:15,000
@@ -736,11 +736,11 @@ Está chovendo muito, acho que vou cancelar meu voo para Paris.(Linha 184)
 
 185
 00:12:16,000 --> 00:12:19,000
-A inteligência artificial está transformando a maneira como interagimos com o mundo digital.(Linha 185)
+A inteligência artificial está transformando a forma como interagimos com o mundo digital.(Linha 185)
 
 186
 00:12:20,000 --> 00:12:23,000
-É uau!Sinceramente, não consigo acreditar.(Linha 186)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 186)
 
 187
 00:12:24,000 --> 00:12:27,000
@@ -752,7 +752,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 188)
 
 189
 00:12:32,000 --> 00:12:35,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 189)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 189)
 
 190
 00:12:36,000 --> 00:12:39,000
@@ -760,7 +760,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 190
 
 191
 00:12:40,000 --> 00:12:43,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 191)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 191)
 
 192
 00:12:44,000 --> 00:12:47,000
@@ -768,11 +768,11 @@ Está chovendo muito, acho que vou cancelar meu voo para Paris.(Linha 192)
 
 193
 00:12:48,000 --> 00:12:51,000
-A inteligência artificial está transformando a maneira como interagimos com o mundo digital.(Linha 193)
+A inteligência artificial está transformando a forma como interagimos com o mundo digital.(Linha 193)
 
 194
 00:12:52,000 --> 00:12:55,000
-É uau!Sinceramente, não consigo acreditar.(Linha 194)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 194)
 
 195
 00:12:56,000 --> 00:12:59,000
@@ -784,7 +784,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 196)
 
 197
 00:13:04,000 --> 00:13:07,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 197)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 197)
 
 198
 00:13:08,000 --> 00:13:11,000
@@ -792,7 +792,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 198
 
 199
 00:13:12,000 --> 00:13:15,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 199)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 199)
 
 200
 00:13:16,000 --> 00:13:19,000
@@ -804,7 +804,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 202
 00:13:24,000 --> 00:13:27,000
-É uau!Sinceramente, não consigo acreditar.(Linha 202)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 202)
 
 203
 00:13:28,000 --> 00:13:31,000
@@ -816,7 +816,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 204)
 
 205
 00:13:36,000 --> 00:13:39,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 205)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 205)
 
 206
 00:13:40,000 --> 00:13:43,000
@@ -824,7 +824,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 206
 
 207
 00:13:44,000 --> 00:13:47,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 207)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 207)
 
 208
 00:13:48,000 --> 00:13:51,000
@@ -836,7 +836,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 210
 00:13:56,000 --> 00:13:59,000
-É uau!Sinceramente, não consigo acreditar.(Linha 210)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 210)
 
 211
 00:14:00,000 --> 00:14:03,000
@@ -848,7 +848,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 212)
 
 213
 00:14:08,000 --> 00:14:11,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 213)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 213)
 
 214
 00:14:12,000 --> 00:14:15,000
@@ -856,7 +856,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 214
 
 215
 00:14:16,000 --> 00:14:19,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 215)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 215)
 
 216
 00:14:20,000 --> 00:14:23,000
@@ -868,7 +868,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 218
 00:14:28,000 --> 00:14:31,000
-É uau!Sinceramente, não consigo acreditar.(Linha 218)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 218)
 
 219
 00:14:32,000 --> 00:14:35,000
@@ -880,7 +880,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 220)
 
 221
 00:14:40,000 --> 00:14:43,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 221)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 221)
 
 222
 00:14:44,000 --> 00:14:47,000
@@ -888,7 +888,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 222
 
 223
 00:14:48,000 --> 00:14:51,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 223)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 223)
 
 224
 00:14:52,000 --> 00:14:55,000
@@ -900,7 +900,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 226
 00:15:00,000 --> 00:15:03,000
-É uau!Sinceramente, não consigo acreditar.(Linha 226)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 226)
 
 227
 00:15:04,000 --> 00:15:07,000
@@ -912,7 +912,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 228)
 
 229
 00:15:12,000 --> 00:15:15,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 229)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 229)
 
 230
 00:15:16,000 --> 00:15:19,000
@@ -920,7 +920,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 230
 
 231
 00:15:20,000 --> 00:15:23,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 231)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 231)
 
 232
 00:15:24,000 --> 00:15:27,000
@@ -932,7 +932,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 234
 00:15:32,000 --> 00:15:35,000
-É uau!Sinceramente, não consigo acreditar.(Linha 234)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 234)
 
 235
 00:15:36,000 --> 00:15:39,000
@@ -944,7 +944,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 236)
 
 237
 00:15:44,000 --> 00:15:47,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 237)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 237)
 
 238
 00:15:48,000 --> 00:15:51,000
@@ -952,7 +952,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 238
 
 239
 00:15:52,000 --> 00:15:55,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 239)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 239)
 
 240
 00:15:56,000 --> 00:15:59,000
@@ -964,7 +964,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 242
 00:16:04,000 --> 00:16:07,000
-É uau!Sinceramente, não consigo acreditar.(Linha 242)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 242)
 
 243
 00:16:08,000 --> 00:16:11,000
@@ -976,7 +976,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 244)
 
 245
 00:16:16,000 --> 00:16:19,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 245)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 245)
 
 246
 00:16:20,000 --> 00:16:23,000
@@ -984,7 +984,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 246
 
 247
 00:16:24,000 --> 00:16:27,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 247)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 247)
 
 248
 00:16:28,000 --> 00:16:31,000
@@ -996,7 +996,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 250
 00:16:36,000 --> 00:16:39,000
-É uau!Sinceramente, não consigo acreditar.(Linha 250)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 250)
 
 251
 00:16:40,000 --> 00:16:43,000
@@ -1008,7 +1008,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 252)
 
 253
 00:16:48,000 --> 00:16:51,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 253)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 253)
 
 254
 00:16:52,000 --> 00:16:55,000
@@ -1016,7 +1016,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 254
 
 255
 00:16:56,000 --> 00:16:59,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 255)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 255)
 
 256
 00:17:00,000 --> 00:17:03,000
@@ -1028,7 +1028,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 258
 00:17:08,000 --> 00:17:11,000
-É uau!Sinceramente, não consigo acreditar.(Linha 258)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 258)
 
 259
 00:17:12,000 --> 00:17:15,000
@@ -1040,7 +1040,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 260)
 
 261
 00:17:20,000 --> 00:17:23,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 261)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 261)
 
 262
 00:17:24,000 --> 00:17:27,000
@@ -1048,7 +1048,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 262
 
 263
 00:17:28,000 --> 00:17:31,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 263)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 263)
 
 264
 00:17:32,000 --> 00:17:35,000
@@ -1060,7 +1060,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 266
 00:17:40,000 --> 00:17:43,000
-É uau!Sinceramente, não consigo acreditar.(Linha 266)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 266)
 
 267
 00:17:44,000 --> 00:17:47,000
@@ -1072,7 +1072,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 268)
 
 269
 00:17:52,000 --> 00:17:55,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 269)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 269)
 
 270
 00:17:56,000 --> 00:17:59,000
@@ -1080,7 +1080,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 270
 
 271
 00:18:00,000 --> 00:18:03,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 271)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 271)
 
 272
 00:18:04,000 --> 00:18:07,000
@@ -1092,7 +1092,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 274
 00:18:12,000 --> 00:18:15,000
-É uau!Sinceramente, não consigo acreditar.(Linha 274)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 274)
 
 275
 00:18:16,000 --> 00:18:19,000
@@ -1104,7 +1104,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 276)
 
 277
 00:18:24,000 --> 00:18:27,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 277)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 277)
 
 278
 00:18:28,000 --> 00:18:31,000
@@ -1112,7 +1112,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 278
 
 279
 00:18:32,000 --> 00:18:35,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 279)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 279)
 
 280
 00:18:36,000 --> 00:18:39,000
@@ -1124,7 +1124,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 282
 00:18:44,000 --> 00:18:47,000
-É uau!Sinceramente, não consigo acreditar.(Linha 282)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 282)
 
 283
 00:18:48,000 --> 00:18:51,000
@@ -1136,7 +1136,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 284)
 
 285
 00:18:56,000 --> 00:18:59,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 285)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 285)
 
 286
 00:19:00,000 --> 00:19:03,000
@@ -1144,7 +1144,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 286
 
 287
 00:19:04,000 --> 00:19:07,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 287)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 287)
 
 288
 00:19:08,000 --> 00:19:11,000
@@ -1156,7 +1156,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 290
 00:19:16,000 --> 00:19:19,000
-É uau!Sinceramente, não consigo acreditar.(Linha 290)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 290)
 
 291
 00:19:20,000 --> 00:19:23,000
@@ -1168,7 +1168,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 292)
 
 293
 00:19:28,000 --> 00:19:31,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 293)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 293)
 
 294
 00:19:32,000 --> 00:19:35,000
@@ -1176,7 +1176,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 294
 
 295
 00:19:36,000 --> 00:19:39,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 295)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 295)
 
 296
 00:19:40,000 --> 00:19:43,000
@@ -1188,7 +1188,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 298
 00:19:48,000 --> 00:19:51,000
-É uau!Sinceramente, não consigo acreditar.(Linha 298)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 298)
 
 299
 00:19:52,000 --> 00:19:55,000
@@ -1200,7 +1200,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 300)
 
 301
 00:20:00,000 --> 00:20:03,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 301)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 301)
 
 302
 00:20:04,000 --> 00:20:07,000
@@ -1208,7 +1208,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 302
 
 303
 00:20:08,000 --> 00:20:11,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 303)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 303)
 
 304
 00:20:12,000 --> 00:20:15,000
@@ -1220,7 +1220,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 306
 00:20:20,000 --> 00:20:23,000
-É uau!Sinceramente, não consigo acreditar.(Linha 306)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 306)
 
 307
 00:20:24,000 --> 00:20:27,000
@@ -1232,7 +1232,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 308)
 
 309
 00:20:32,000 --> 00:20:35,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 309)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 309)
 
 310
 00:20:36,000 --> 00:20:39,000
@@ -1240,7 +1240,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 310
 
 311
 00:20:40,000 --> 00:20:43,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 311)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 311)
 
 312
 00:20:44,000 --> 00:20:47,000
@@ -1252,7 +1252,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 314
 00:20:52,000 --> 00:20:55,000
-É uau!Sinceramente, não consigo acreditar.(Linha 314)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 314)
 
 315
 00:20:56,000 --> 00:20:59,000
@@ -1264,7 +1264,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 316)
 
 317
 00:21:04,000 --> 00:21:07,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 317)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 317)
 
 318
 00:21:08,000 --> 00:21:11,000
@@ -1272,7 +1272,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 318
 
 319
 00:21:12,000 --> 00:21:15,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 319)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 319)
 
 320
 00:21:16,000 --> 00:21:19,000
@@ -1284,7 +1284,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 322
 00:21:24,000 --> 00:21:27,000
-É uau!Sinceramente, não consigo acreditar.(Linha 322)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 322)
 
 323
 00:21:28,000 --> 00:21:31,000
@@ -1296,7 +1296,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 324)
 
 325
 00:21:36,000 --> 00:21:39,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 325)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 325)
 
 326
 00:21:40,000 --> 00:21:43,000
@@ -1304,7 +1304,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 326
 
 327
 00:21:44,000 --> 00:21:47,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 327)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 327)
 
 328
 00:21:48,000 --> 00:21:51,000
@@ -1316,7 +1316,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 330
 00:21:56,000 --> 00:21:59,000
-É uau!Sinceramente, não consigo acreditar.(Linha 330)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 330)
 
 331
 00:22:00,000 --> 00:22:03,000
@@ -1328,7 +1328,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 332)
 
 333
 00:22:08,000 --> 00:22:11,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 333)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 333)
 
 334
 00:22:12,000 --> 00:22:15,000
@@ -1336,7 +1336,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 334
 
 335
 00:22:16,000 --> 00:22:19,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 335)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 335)
 
 336
 00:22:20,000 --> 00:22:23,000
@@ -1348,7 +1348,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 338
 00:22:28,000 --> 00:22:31,000
-É uau!Sinceramente, não consigo acreditar.(Linha 338)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 338)
 
 339
 00:22:32,000 --> 00:22:35,000
@@ -1360,7 +1360,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 340)
 
 341
 00:22:40,000 --> 00:22:43,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 341)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 341)
 
 342
 00:22:44,000 --> 00:22:47,000
@@ -1368,7 +1368,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 342
 
 343
 00:22:48,000 --> 00:22:51,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 343)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 343)
 
 344
 00:22:52,000 --> 00:22:55,000
@@ -1380,7 +1380,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 346
 00:23:00,000 --> 00:23:03,000
-É uau!Sinceramente, não consigo acreditar.(Linha 346)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 346)
 
 347
 00:23:04,000 --> 00:23:07,000
@@ -1392,7 +1392,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 348)
 
 349
 00:23:12,000 --> 00:23:15,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 349)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 349)
 
 350
 00:23:16,000 --> 00:23:19,000
@@ -1400,7 +1400,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 350
 
 351
 00:23:20,000 --> 00:23:23,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 351)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 351)
 
 352
 00:23:24,000 --> 00:23:27,000
@@ -1412,7 +1412,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 354
 00:23:32,000 --> 00:23:35,000
-É uau!Sinceramente, não consigo acreditar.(Linha 354)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 354)
 
 355
 00:23:36,000 --> 00:23:39,000
@@ -1424,7 +1424,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 356)
 
 357
 00:23:44,000 --> 00:23:47,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 357)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 357)
 
 358
 00:23:48,000 --> 00:23:51,000
@@ -1432,7 +1432,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 358
 
 359
 00:23:52,000 --> 00:23:55,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 359)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 359)
 
 360
 00:23:56,000 --> 00:23:59,000
@@ -1444,7 +1444,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 362
 00:24:04,000 --> 00:24:07,000
-É uau!Sinceramente, não consigo acreditar.(Linha 362)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 362)
 
 363
 00:24:08,000 --> 00:24:11,000
@@ -1456,7 +1456,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 364)
 
 365
 00:24:16,000 --> 00:24:19,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 365)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 365)
 
 366
 00:24:20,000 --> 00:24:23,000
@@ -1464,7 +1464,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 366
 
 367
 00:24:24,000 --> 00:24:27,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 367)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 367)
 
 368
 00:24:28,000 --> 00:24:31,000
@@ -1476,7 +1476,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 370
 00:24:36,000 --> 00:24:39,000
-É uau!Sinceramente, não consigo acreditar.(Linha 370)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 370)
 
 371
 00:24:40,000 --> 00:24:43,000
@@ -1488,7 +1488,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 372)
 
 373
 00:24:48,000 --> 00:24:51,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 373)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 373)
 
 374
 00:24:52,000 --> 00:24:55,000
@@ -1496,7 +1496,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 374
 
 375
 00:24:56,000 --> 00:24:59,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 375)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 375)
 
 376
 00:25:00,000 --> 00:25:03,000
@@ -1508,7 +1508,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 378
 00:25:08,000 --> 00:25:11,000
-É uau!Sinceramente, não consigo acreditar.(Linha 378)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 378)
 
 379
 00:25:12,000 --> 00:25:15,000
@@ -1520,7 +1520,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 380)
 
 381
 00:25:20,000 --> 00:25:23,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 381)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 381)
 
 382
 00:25:24,000 --> 00:25:27,000
@@ -1528,7 +1528,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 382
 
 383
 00:25:28,000 --> 00:25:31,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 383)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 383)
 
 384
 00:25:32,000 --> 00:25:35,000
@@ -1540,7 +1540,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 386
 00:25:40,000 --> 00:25:43,000
-É uau!Sinceramente, não consigo acreditar.(Linha 386)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 386)
 
 387
 00:25:44,000 --> 00:25:47,000
@@ -1552,7 +1552,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 388)
 
 389
 00:25:52,000 --> 00:25:55,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 389)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 389)
 
 390
 00:25:56,000 --> 00:25:59,000
@@ -1560,7 +1560,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 390
 
 391
 00:26:00,000 --> 00:26:03,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 391)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 391)
 
 392
 00:26:04,000 --> 00:26:07,000
@@ -1572,7 +1572,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 394
 00:26:12,000 --> 00:26:15,000
-É uau!Sinceramente, não consigo acreditar.(Linha 394)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 394)
 
 395
 00:26:16,000 --> 00:26:19,000
@@ -1584,7 +1584,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 396)
 
 397
 00:26:24,000 --> 00:26:27,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 397)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 397)
 
 398
 00:26:28,000 --> 00:26:31,000
@@ -1592,7 +1592,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 398
 
 399
 00:26:32,000 --> 00:26:35,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 399)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 399)
 
 400
 00:26:36,000 --> 00:26:39,000
@@ -1604,7 +1604,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 402
 00:26:44,000 --> 00:26:47,000
-É uau!Sinceramente, não consigo acreditar.(Linha 402)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 402)
 
 403
 00:26:48,000 --> 00:26:51,000
@@ -1616,7 +1616,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 404)
 
 405
 00:26:56,000 --> 00:26:59,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 405)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 405)
 
 406
 00:27:00,000 --> 00:27:03,000
@@ -1624,7 +1624,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 406
 
 407
 00:27:04,000 --> 00:27:07,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 407)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 407)
 
 408
 00:27:08,000 --> 00:27:11,000
@@ -1636,7 +1636,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 410
 00:27:16,000 --> 00:27:19,000
-É uau!Sinceramente, não consigo acreditar.(Linha 410)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 410)
 
 411
 00:27:20,000 --> 00:27:23,000
@@ -1648,7 +1648,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 412)
 
 413
 00:27:28,000 --> 00:27:31,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 413)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 413)
 
 414
 00:27:32,000 --> 00:27:35,000
@@ -1656,7 +1656,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 414
 
 415
 00:27:36,000 --> 00:27:39,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 415)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 415)
 
 416
 00:27:40,000 --> 00:27:43,000
@@ -1668,7 +1668,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 418
 00:27:48,000 --> 00:27:51,000
-É uau!Sinceramente, não consigo acreditar.(Linha 418)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 418)
 
 419
 00:27:52,000 --> 00:27:55,000
@@ -1680,7 +1680,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 420)
 
 421
 00:28:00,000 --> 00:28:03,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 421)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 421)
 
 422
 00:28:04,000 --> 00:28:07,000
@@ -1688,7 +1688,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 422
 
 423
 00:28:08,000 --> 00:28:11,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 423)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 423)
 
 424
 00:28:12,000 --> 00:28:15,000
@@ -1700,7 +1700,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 426
 00:28:20,000 --> 00:28:23,000
-É uau!Sinceramente, não consigo acreditar.(Linha 426)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 426)
 
 427
 00:28:24,000 --> 00:28:27,000
@@ -1712,7 +1712,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 428)
 
 429
 00:28:32,000 --> 00:28:35,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 429)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 429)
 
 430
 00:28:36,000 --> 00:28:39,000
@@ -1720,7 +1720,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 430
 
 431
 00:28:40,000 --> 00:28:43,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 431)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 431)
 
 432
 00:28:44,000 --> 00:28:47,000
@@ -1732,7 +1732,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 434
 00:28:52,000 --> 00:28:55,000
-É uau!Sinceramente, não consigo acreditar.(Linha 434)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 434)
 
 435
 00:28:56,000 --> 00:28:59,000
@@ -1744,7 +1744,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 436)
 
 437
 00:29:04,000 --> 00:29:07,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 437)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 437)
 
 438
 00:29:08,000 --> 00:29:11,000
@@ -1752,7 +1752,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 438
 
 439
 00:29:12,000 --> 00:29:15,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 439)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 439)
 
 440
 00:29:16,000 --> 00:29:19,000
@@ -1764,7 +1764,7 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 442
 00:29:24,000 --> 00:29:27,000
-É uau!Sinceramente, não consigo acreditar.(Linha 442)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 442)
 
 443
 00:29:28,000 --> 00:29:31,000
@@ -1776,7 +1776,7 @@ O sistema relatou um erro fatal no módulo de memória principal.(Linha 444)
 
 445
 00:29:36,000 --> 00:29:39,000
-Nos encontraremos amanhã à tarde para discutir isso durante o café, ok?(Linha 445)
+Vamos conversar amanhã à tarde tomando café para discutir isso, certo?(Linha 445)
 
 446
 00:29:40,000 --> 00:29:43,000
@@ -1784,7 +1784,7 @@ A física quântica desafia nossa compreensão intuitiva da realidade.(Linha 446
 
 447
 00:29:44,000 --> 00:29:47,000
-Aconteça o que acontecer, precisamos de encontrar uma solução duradoura antes do prazo.(Linha 447)
+De qualquer forma, precisamos de encontrar uma solução sustentável antes do prazo.(Linha 447)
 
 448
 00:29:48,000 --> 00:29:51,000
@@ -1796,5 +1796,5 @@ A inteligência artificial está transformando a forma como interagimos com o mu
 
 450
 00:29:56,000 --> 00:29:59,000
-É uau!Sinceramente, não consigo acreditar.(Linha 450)
+Isso é selvagem!Sinceramente, não consigo acreditar.(Linha 450)
 

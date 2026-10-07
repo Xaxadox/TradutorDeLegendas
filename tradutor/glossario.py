@@ -1,7 +1,7 @@
 import os
 import re
 
-class GlossaryManager:
+class GerenciadorGlossario:
     """Gerenciador do Dicionário Anti-Tradução (Glossário).
     
     Implementa a técnica de Tokenização Isolada:
@@ -11,7 +11,7 @@ class GlossaryManager:
     
     def __init__(self, filepath="glossario.txt"):
         self.filepath = filepath
-        self.glossary_map = {}
+        self.glossario_map = {}
         self.load()
 
     def load(self):
@@ -40,22 +40,22 @@ class GlossaryManager:
                         continue
                     if '=' in line:
                         src, tgt = line.split('=', 1)
-                        self.glossary_map[src.strip()] = tgt.strip()
+                        self.glossario_map[src.strip()] = tgt.strip()
                     else:
-                        self.glossary_map[line] = line
+                        self.glossario_map[line] = line
         except Exception:
             pass
 
     def apply_shield(self, text):
         """Aplica o escudo substituindo termos por tokens."""
         mapping = {}
-        if not self.glossary_map:
+        if not self.glossario_map:
             return text, mapping
             
         shielded_text = text
         counter = 0
         # Substitui os termos mais longos primeiro para evitar conflitos parciais
-        sorted_keys = sorted(self.glossary_map.keys(), key=len, reverse=True)
+        sorted_keys = sorted(self.glossario_map.keys(), key=len, reverse=True)
         
         for key in sorted_keys:
             escaped_key = re.escape(key)
@@ -64,7 +64,7 @@ class GlossaryManager:
             def repl(match):
                 nonlocal counter
                 token = f"TKGLOSS{counter}T"
-                mapping[token] = self.glossary_map[key]
+                mapping[token] = self.glossario_map[key]
                 counter += 1
                 return f" {token} "
 

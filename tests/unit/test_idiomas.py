@@ -12,31 +12,28 @@ class TestIdiomas(unittest.TestCase):
     """
     
     def test_para_google(self):
-        # Mapeamentos diretos ISO -> Google
-        self.assertEqual(Idiomas.para_google("jpn"), "ja")
-        self.assertEqual(Idiomas.para_google("eng"), "en")
-        self.assertEqual(Idiomas.para_google("por"), "pt")
-        self.assertEqual(Idiomas.para_google("fra"), "fr")
-        
-        # Códigos sem tag no MKV ou desconhecidos vão para "auto"
-        self.assertEqual(Idiomas.para_google("und"), "auto")
-        self.assertEqual(Idiomas.para_google("mul"), "auto")
-        self.assertEqual(Idiomas.para_google("zzz"), "auto")
-        self.assertEqual(Idiomas.para_google(""), "auto")
-        
-        # Códigos que já estão no padrão do Google passam direto
-        self.assertEqual(Idiomas.para_google("pt"), "pt")
-        self.assertEqual(Idiomas.para_google("ja"), "ja")
-        self.assertEqual(Idiomas.para_google("auto"), "auto")
+        casos = {
+            # ISO -> Google
+            "jpn": "ja", "eng": "en", "por": "pt", "fra": "fr",
+            # Fallbacks e vazios
+            "und": "auto", "mul": "auto", "zzz": "auto", "": "auto",
+            # Já estão no padrão do Google
+            "pt": "pt", "ja": "ja", "auto": "auto"
+        }
+        for entrada, esperado in casos.items():
+            with self.subTest(entrada=entrada):
+                self.assertEqual(Idiomas.para_google(entrada), esperado)
 
     def test_destino_para_mkv(self):
-        # Google -> Tupla (ISO, Nome Legível) para o MKV
-        self.assertEqual(Idiomas.destino_para_mkv("pt"), ("por", "Português (Brasil)"))
-        self.assertEqual(Idiomas.destino_para_mkv("ja"), ("jpn", "日本語"))
-        self.assertEqual(Idiomas.destino_para_mkv("en"), ("eng", "English"))
-        
-        # Destinos que não mapeamos com nome bonitinho devem ter fallback genérico
-        self.assertEqual(Idiomas.destino_para_mkv("xyz"), ("xyz", "XYZ"))
+        casos = {
+            "pt": ("por", "Português (Brasil)"),
+            "ja": ("jpn", "日本語"),
+            "en": ("eng", "English"),
+            "xyz": ("xyz", "XYZ") # Destino desconhecido
+        }
+        for entrada, esperado in casos.items():
+            with self.subTest(entrada=entrada):
+                self.assertEqual(Idiomas.destino_para_mkv(entrada), esperado)
 
 if __name__ == "__main__":
     unittest.main()

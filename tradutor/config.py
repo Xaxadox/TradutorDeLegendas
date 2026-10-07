@@ -1,7 +1,7 @@
 import os
 
 
-class ConfigManager:
+class GerenciadorConfig:
     """Configurações globais e detecção de dependências do projeto."""
 
     TAMANHO_LOTE = 40

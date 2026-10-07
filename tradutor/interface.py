@@ -20,7 +20,7 @@ except ImportError:
 
 
 
-class AppGui(ctk.CTk, TkinterDnD.DnDWrapper if HAS_DND else object):
+class InterfaceGrafica(ctk.CTk, TkinterDnD.DnDWrapper if HAS_DND else object):
     """View layer: Interface gráfica pura.
 
     Responsável exclusivamente por renderizar widgets, capturar

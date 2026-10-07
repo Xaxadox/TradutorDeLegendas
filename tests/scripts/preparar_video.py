@@ -45,8 +45,8 @@ def preparar_video():
     saida_video = os.path.join(diretorio_teste, "data", "VideoForTest_multi.mkv")
     
     sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-    from tradutor.config import ConfigManager
-    mkvmerge, _ = ConfigManager.get_mkv_bins()
+    from tradutor.config import GerenciadorConfig
+    mkvmerge, _ = GerenciadorConfig.get_mkv_bins()
 
     comando = [mkvmerge, "-o", saida_video, caminho_video] + comando_mkvmerge_args
     

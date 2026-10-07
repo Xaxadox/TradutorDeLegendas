@@ -5,7 +5,7 @@ import time
 # Adicionar raiz do projeto ao path para conseguir importar os módulos
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-from tradutor.orchestrator import TranslationOrchestrator
+from tradutor.orquestrador import OrquestradorTraducoes
 
 def rodar_teste_mkv(caminho_mkv, idioma_origem_menu="auto", idioma_destino="pt"):
     """
@@ -21,7 +21,7 @@ def rodar_teste_mkv(caminho_mkv, idioma_origem_menu="auto", idioma_destino="pt")
     print(f" INICIANDO TESTE E2E PARA MKV: {os.path.basename(caminho_mkv)}")
     print("="*60)
     
-    model = TranslationOrchestrator()
+    model = OrquestradorTraducoes()
     
     # Mockando a interface gráfica para ver os logs no console
     def mock_log(msg):

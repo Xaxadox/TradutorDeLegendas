@@ -5,7 +5,7 @@ import time
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-from tradutor.orchestrator import TranslationOrchestrator
+from tradutor.orquestrador import OrquestradorTraducoes
 import pysubs2
 
 def rodar_teste():
@@ -13,7 +13,7 @@ def rodar_teste():
     print(" INICIANDO AMBIENTE DE TESTES MASSIVOS ")
     print("="*50)
     
-    model = TranslationOrchestrator()
+    model = OrquestradorTraducoes()
     
     # Mockando a interface gráfica
     def mock_log(msg):

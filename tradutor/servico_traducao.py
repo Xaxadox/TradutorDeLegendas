@@ -5,42 +5,32 @@ import threading
 from concurrent.futures import ThreadPoolExecutor
 
 import pysubs2
-from googletrans import Translator
 
-from .config import ConfigManager
-from .glossary import GlossaryManager
+from .config import GerenciadorConfig
+from .glossario import GerenciadorGlossario
 from .idiomas import Idiomas
+from .cache import CacheTraducoes
 
 
-class TranslatorService:
+class ServicoTraducao:
     """Serviço de tradução assíncrona de legendas via Google Translate.
 
     Processa legendas em lotes concorrentes, com fallback sequencial
     quando a API retorna quantidade inconsistente de linhas.
     """
 
-    def __init__(self, logger, progress_callback, is_cancelled_callback=None):
+    def __init__(self, logger, progress_callback, is_cancelled_callback=None, engine=None):
         self._logger = logger
         self._progress_callback = progress_callback
         self._is_cancelled = is_cancelled_callback or (lambda: False)
         self._linhas_processadas = 0
         self._total_linhas = 0
-        self._glossary = GlossaryManager()
-
-    def _traduzir_sync(self, translator, texto, src_lang="auto", dest_lang="pt", retries=ConfigManager.MAX_RETENTATIVAS):
-        """Traduz um bloco de texto de forma síncrona, com retentativas exponenciais."""
-        for tentativa in range(retries):
-            try:
-                return translator.translate(texto, src=src_lang, dest=dest_lang).text
-            except (TypeError, ValueError, AttributeError) as e:
-                # Erros estruturais ou de parsing do googletrans costumam ser permanentes
-                # (ex: IP bloqueado retornando HTML em vez de JSON ou dados inválidos)
-                raise RuntimeError(f"Erro permanente detectado. Tradução abortada para este lote: {e}")
-            except Exception as e:
-                # Erros transientes (Timeout, ConnectionError, etc.)
-                if tentativa == retries - 1:
-                    raise RuntimeError(f"Falha na API do Google após {retries} tentativas: {e}")
-                time.sleep(2 ** tentativa)
+        self._glossary = GerenciadorGlossario()
+        self._cache = CacheTraducoes()
+        
+        if engine is None:
+            raise ValueError("Um motor de tradução (ITradutor) deve ser fornecido.")
+        self._engine = engine
 
     @staticmethod
     def _limpar_quebras(texto):
@@ -60,7 +50,6 @@ class TranslatorService:
             return
 
         loop = asyncio.get_running_loop()
-        translator = Translator()
 
         textos_preparados = []
         for idx in lote_indices:
@@ -75,7 +64,15 @@ class TranslatorService:
             if self._is_cancelled():
                 return
             try:
-                traduzido = await loop.run_in_executor(executor, self._traduzir_sync, translator, bloco_protegido, src_lang, dest_lang)
+                # 1. Busca no Cache Local
+                traduzido = self._cache.get(bloco_protegido, src_lang, dest_lang)
+                
+                if not traduzido:
+                    # 2. Se não existir, vai na Rede via Engine injetada
+                    traduzido = await loop.run_in_executor(executor, self._engine.translate, bloco_protegido, src_lang, dest_lang)
+                    # 3. Salva no Cache
+                    self._cache.put(bloco_protegido, src_lang, dest_lang, traduzido)
+                    
                 traduzido_restaurado = self._glossary.remove_shield(traduzido, mapeamento)
                 
                 frases = [f.strip() for f in traduzido_restaurado.split("\n") if f.strip()]
@@ -88,7 +85,7 @@ class TranslatorService:
                     self._logger("[Aviso] Dessincronia no lote. Executando fallback sequencial...")
                     for idx, texto in zip(lote_indices, textos_preparados):
                         texto_protegido, map_seq = self._glossary.apply_shield(texto)
-                        r = await loop.run_in_executor(executor, self._traduzir_sync, translator, texto_protegido, src_lang, dest_lang)
+                        r = await loop.run_in_executor(executor, self._engine.translate, texto_protegido, src_lang, dest_lang)
                         r_restaurado = self._glossary.remove_shield(r, map_seq)
                         subs[idx].text = self._limpar_quebras(r_restaurado)
                         await asyncio.sleep(0.5)
@@ -126,13 +123,13 @@ class TranslatorService:
         self._progress_callback(0, self._total_linhas)
 
         lotes = [
-            indices_map[i : i + ConfigManager.TAMANHO_LOTE]
-            for i in range(0, self._total_linhas, ConfigManager.TAMANHO_LOTE)
+            indices_map[i : i + GerenciadorConfig.TAMANHO_LOTE]
+            for i in range(0, self._total_linhas, GerenciadorConfig.TAMANHO_LOTE)
         ]
-        semaforo = asyncio.Semaphore(ConfigManager.MAX_CONCORRENTE)
+        semaforo = asyncio.Semaphore(GerenciadorConfig.MAX_CONCORRENTE)
         pbar_lock = threading.Lock()
 
-        with ThreadPoolExecutor(max_workers=ConfigManager.MAX_CONCORRENTE) as executor:
+        with ThreadPoolExecutor(max_workers=GerenciadorConfig.MAX_CONCORRENTE) as executor:
             tasks = [self._traduzir_lote(executor, semaforo, lote, subs, pbar_lock, src_lang, idioma_destino) for lote in lotes]
             await asyncio.gather(*tasks)
 

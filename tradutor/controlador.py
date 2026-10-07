@@ -1,4 +1,4 @@
-class AppController:
+class ControladorApp:
     """Controller layer: Ponte entre a View (GUI) e o Model (Orchestrator).
 
     Traduz ações do usuário em operações de negócio e conecta
@@ -29,12 +29,12 @@ class AppController:
     def on_files_selected(self, files):
         """Varre arquivos MKV de forma assíncrona em busca de idiomas."""
         import threading
-        from .mkv_wrapper import MkvWrapper
+        from .manipulador_mkv import ManipuladorMkv
 
         def _verificar():
             mkvs = [f for f in files if f.lower().endswith('.mkv')]
             if mkvs:
-                langs = MkvWrapper.listar_idiomas_legendas(mkvs)
+                langs = ManipuladorMkv.listar_idiomas_legendas(mkvs)
                 if langs:
                     self._view.update_language_options(langs)
 
