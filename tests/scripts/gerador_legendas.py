@@ -117,7 +117,8 @@ def generate_srt(idioma, sentences, output_dir):
     print(f"Gerado: {filepath} (450 falas, ~30 minutos)")
 
 if __name__ == "__main__":
-    output_dir = os.path.dirname(os.path.abspath(__file__))
+    output_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "legendas")
+    os.makedirs(output_dir, exist_ok=True)
     print("Gerando arquivos SRT massivos de 30 minutos...")
     for idioma, frases in base_sentences.items():
         generate_srt(idioma, frases, output_dir)

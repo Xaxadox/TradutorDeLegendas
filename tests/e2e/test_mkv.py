@@ -3,7 +3,7 @@ import sys
 import time
 
 # Adicionar raiz do projeto ao path para conseguir importar os módulos
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from tradutor.orchestrator import TranslationOrchestrator
 
@@ -84,10 +84,10 @@ def rodar_teste_mkv(caminho_mkv, idioma_origem_menu="auto", idioma_destino="pt")
     print("[INFO] Pasta de testes limpa.")
 
 if __name__ == "__main__":
-    diretorio_teste = os.path.dirname(os.path.abspath(__file__))
+    diretorio_teste = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     # Defina o caminho para o seu MKV de teste aqui
     # Exemplo: um episódio de anime com legenda embutida
-    caminho_teste = os.path.join(diretorio_teste, "VideoForTest.mkv")
+    caminho_teste = os.path.join(diretorio_teste, "data", "VideoForTest.mkv")
     
     # Executa forçando a "preferência" errada no menu para ver se a inteligência de extração corrige
     rodar_teste_mkv(caminho_teste, idioma_origem_menu="eng", idioma_destino="pt")

@@ -3,8 +3,7 @@ import sys
 import json
 import time
 
-# Adicionar raiz do projeto ao path
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from tradutor.orchestrator import TranslationOrchestrator
 import pysubs2
@@ -39,8 +38,8 @@ def rodar_teste():
     )
     
     # Prepara caminhos
-    diretorio_teste = os.path.dirname(os.path.abspath(__file__))
-    diretorio_legendas = os.path.join(diretorio_teste, "legendas")
+    diretorio_teste = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    diretorio_legendas = os.path.join(diretorio_teste, "data", "legendas")
     
     arquivos = [f for f in os.listdir(diretorio_legendas) if f.endswith('.srt') and not f.endswith('_PTBR.srt')]
     
@@ -112,7 +111,7 @@ def rodar_teste():
             print(f"\n[FALHA] Arquivo {destino} não foi gerado.")
             relatorio_geral[arquivo] = {"status": "FALHA"}
 
-    relatorio_path = os.path.join(diretorio_teste, "relatorio_teste_massivo.json")
+    relatorio_path = os.path.join(diretorio_teste, "output", "relatorio_teste_massivo.json")
     with open(relatorio_path, 'w', encoding='utf-8') as f:
         json.dump(relatorio_geral, f, indent=4, ensure_ascii=False)
         

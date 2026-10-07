@@ -3,8 +3,8 @@ import subprocess
 import sys
 
 def preparar_video():
-    diretorio_teste = os.path.dirname(os.path.abspath(__file__))
-    caminho_video = os.path.join(diretorio_teste, "VideoForTest.mkv")
+    diretorio_teste = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    caminho_video = os.path.join(diretorio_teste, "data", "VideoForTest.mkv")
     
     if not os.path.exists(caminho_video):
         print(f"[ERRO] O vídeo '{caminho_video}' não foi encontrado.")
@@ -28,7 +28,7 @@ def preparar_video():
     
     # 1. Gerar legendas temporárias
     for lang, frases in novas_legendas.items():
-        srt_path = os.path.join(diretorio_teste, f"temp_{lang}.srt")
+        srt_path = os.path.join(diretorio_teste, "data", f"temp_{lang}.srt")
         arquivos_srt.append(srt_path)
         with open(srt_path, "w", encoding="utf-8") as f:
             f.write(f"1\n00:00:01,000 --> 00:00:04,000\n{frases[0]}\n\n")
@@ -42,9 +42,9 @@ def preparar_video():
         print(f"[INFO] Legenda temporária criada para: {lang}")
     
     # 2. Muxar as legendas no vídeo
-    saida_video = os.path.join(diretorio_teste, "VideoForTest_multi.mkv")
+    saida_video = os.path.join(diretorio_teste, "data", "VideoForTest_multi.mkv")
     
-    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
     from tradutor.config import ConfigManager
     mkvmerge, _ = ConfigManager.get_mkv_bins()
 
