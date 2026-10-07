@@ -1,40 +1,41 @@
-# Tradutor Automático de Legendas MKV/ASS/SRT
+# Tradutor Automatico de Legendas MKV/ASS/SRT
 
-Uma ferramenta automatizada em Python com arquitetura MVC e interface gráfica moderna para extração, tradução e multiplexação de legendas em arquivos de vídeo `.mkv`, com suporte a arquivos avulsos `.ass` e `.srt`. O script utiliza a API do Google Translate de forma assíncrona para garantir alta performance e possui mecanismos robustos de tolerância a falhas para evitar bloqueios de rede.
+Uma ferramenta automatizada em Python com arquitetura MVC, Strategy Pattern e interface grafica moderna para extracao, traducao e multiplexacao de legendas em arquivos de video `.mkv`, com suporte a arquivos avulsos `.ass` e `.srt`. O script utiliza a API do Google Translate de forma assincrona para garantir alta performance e possui mecanismos robustos de tolerancia a falhas, cache local e protecao de rede.
 
-## 🚀 Funcionalidades
+## Funcionalidades
 
-* **Arquitetura Escalável (MVC):** Código organizado sob o padrão MVC na pasta `tradutor/`, garantindo alta coesão, modularidade e desacoplamento entre Interface (View), Lógica de Controle (Controller) e Processamento (Model).
-* **Detecção Inteligente de Idiomas:** Ao selecionar arquivos `.mkv`, o sistema varre de forma assíncrona as faixas de legenda disponíveis e preenche automaticamente um menu suspenso (Dropdown) com os idiomas originais presentes no vídeo.
-* **Mitigação de "Língua Pivô":** Converte automaticamente códigos ISO-639-2 do MKV (ex: `fra`) para ISO-639-1 (ex: `fr`) do Google Translate (cerca de 35 idiomas mapeados). Isso informa forçosamente ao Google o idioma de origem, evitando o "vazamento" de palavras em inglês ao traduzir de idiomas estrangeiros complexos.
-* **Idioma Real da Faixa:** O idioma enviado ao Google é o da faixa realmente extraída de cada vídeo, mesmo com a opção `auto` ou quando o idioma preferido não existe no arquivo (nesse caso, o log avisa qual faixa foi usada). Idiomas desconhecidos usam a autodetecção do Google, com aviso. Se a faixa já estiver no idioma de destino, o vídeo é pulado.
-* **Automação MKV de Ponta a Ponta:** Extrai silenciosamente a trilha de legenda do vídeo original, traduz preservando todas as formatações e embute (muxing) o arquivo traduzido em um novo vídeo `<nome>_<DESTINO>.mkv` (ex: `_PT.mkv`), com o idioma e o nome da trilha do destino escolhido, sem perda de qualidade.
-* **Preservação Opcional de Legendas:** Checkbox na interface permite manter o arquivo `.ass` ou `.srt` final após a extração, em vez de excluí-lo como temporário.
-* **Alta Performance (Async/Concorrência):** Utiliza `asyncio`, `Semaphores` e `ThreadPoolExecutor` para paralelizar as chamadas à API, mantendo a responsividade da interface gráfica.
-* **Tolerância a Falhas e Anti-Ban:**
-    * *Exponential Backoff:* Tenta reconectar automaticamente e adormece a thread em caso de falha de conexão com a API.
-    * *Tratamento de Erros de IP:* Detecta proativamente bloqueios de Captcha do Google, interrompendo graciosamente lotes falhos sem travar a interface.
-    * *Fallback Sequencial:* Reprocessa o lote linha a linha caso as traduções em bloco fiquem dessincronizadas.
+* **Arquitetura Escalavel (MVC e Strategy):** Codigo organizado sob o padrao MVC na pasta `tradutor/`. A logica de execucao utiliza o padrao Strategy (via `FabricaProcessadores`), o que permite extender o suporte a novos arquivos sem modificar o orquestrador principal (`OrquestradorTraducoes`).
+* **Deteccao Inteligente de Idiomas:** Ao selecionar arquivos `.mkv`, o sistema varre de forma assincrona as faixas de legenda disponiveis e preenche automaticamente o menu suspenso com os idiomas originais presentes no video.
+* **Mitigacao de "Lingua Pivo":** Converte automaticamente codigos ISO-639-2 do MKV para ISO-639-1 do Google Translate. Isso informa forcosamente ao Google o idioma de origem, evitando o "vazamento" de palavras em ingles ao traduzir de idiomas estrangeiros complexos.
+* **Idioma Real da Faixa:** O idioma enviado ao Google e o da faixa realmente extraida de cada video, mesmo com a opcao `auto` ou quando o idioma preferido nao existe no arquivo.
+* **Injecao de Dependencias (Motores de Traducao):** O sistema isola a dependencia do `googletrans` em uma classe especialista (`MotorTraducaoGoogle`) que respeita uma interface comum (`ITradutor`). Isso permite acoplar facilmente motores alternativos (ex: DeepL) no futuro.
+* **Automacao MKV de Ponta a Ponta:** Extrai silenciosamente a trilha de legenda do video original, traduz preservando formatacoes e embute o arquivo traduzido em um novo video `<nome>_<DESTINO>.mkv`.
+* **Alta Performance (Async/Concorrencia):** Utiliza `asyncio`, e `ThreadPoolExecutor` para paralelizar as chamadas a API.
 
-## 🛠️ Como Usar (Instalação Fácil)
+## Tolerancia a Falhas e Resiliencia
 
-A ferramenta é "Plug and Play" no Windows.
+* **Checkpointing e Caching Local (SQLite):** Cada frase traduzida com sucesso e salva em um banco de dados local (`cache_traducoes.db`) utilizando Hashes SHA-256. Se o programa fechar no meio de um arquivo gigante ou a internet cair, a proxima execucao retomara exatamente de onde parou em milissegundos.
+* **Circuit Breaker (Disjuntor de Rede):** O motor de traducao possui um desarme de seguranca. Se a API falhar 5 vezes seguidas (ex: bloqueio de IP/Captcha), o sistema abre o circuito e suspende as chamadas por 60 segundos, evitando travamentos e banimentos permanentes.
+* **Auditoria de Logs:** Toda a saida do programa e gravada silenciosamente em arquivos `.log` padronizados na pasta `logs/` contendo niveis de severidade e timestamps exatos.
 
-1. Baixe o repositório para o seu computador.
+## Como Usar (Instalacao Facil)
+
+A ferramenta e "Plug and Play" no Windows.
+
+1. Baixe o repositorio para o seu computador.
 2. Certifique-se de ter o **Python 3.8+** instalado no sistema.
-3. Dê um duplo-clique no arquivo **`iniciar.bat`**.
+3. De um duplo-clique no arquivo **`iniciar.bat`**.
 
-> O `iniciar.bat` criará automaticamente um ambiente virtual (`venv/`), instalará as dependências (`requirements.txt`) e abrirá a interface.
+O `iniciar.bat` criara automaticamente um ambiente virtual (`venv/`), instalara as dependencias (`requirements.txt`) e abrira a interface grafica.
 
-### Pré-requisitos (MKVToolNix)
-Necessário apenas para vídeos embutidos (.mkv).
-* *Opção 1 (Sistema):* Instale o [MKVToolNix](https://mkvtoolnix.download/) (`C:\Program Files\MKVToolNix`).
-* *Opção 2 (Portátil):* Coloque os executáveis (`mkvmerge.exe` e `mkvextract.exe`) dentro da pasta `mkvtoolnix/` na raiz do projeto.
+### Pre-requisitos (MKVToolNix)
+Necessario apenas para videos embutidos (.mkv).
+* Opcao 1 (Sistema): Instale o MKVToolNix (`C:\Program Files\MKVToolNix`).
+* Opcao 2 (Portatil): Coloque os executaveis (`mkvmerge.exe` e `mkvextract.exe`) dentro da pasta `mkvtoolnix/` na raiz do projeto.
 
-## 🧪 Ambiente de Testes Massivos
+## Ambiente de Testes Massivos
 
-O projeto conta com uma suíte de testes isolada (`tests/`) focada em testes de estresse de tradução.
+O projeto conta com uma suite de testes isolada (`tests/`) focada em testes end-to-end e testes de unidade orientados a dados (Data-Driven Testing).
 
-* **Como testar:** Execute o arquivo `testar.bat` na raiz.
-* **Como funciona:** O script carrega um Mock da Interface Gráfica e consome diretamente a lógica do `TranslationOrchestrator` de forma *Headless* (sem tela).
-* **Massive Testing:** Ele lê dinamicamente todas as legendas brutas contidas em `tests/legendas/`, converte a origem baseado no nome do arquivo (ex: `Japones.srt`), aciona o limite máximo de concorrência e despeja um json gigante (`relatorio_teste_massivo.json`) contendo a **Estatística Percentual de Sucesso (%)** de cada linha modificada comparada à original.
+* **Como testar Unitarios:** Execute `python -m unittest discover -s tests\unit -p "test_*.py"`.
+* **Como testar E2E:** Execute os scripts de lote dentro de `tests/e2e/`, como `test_mkv.py` ou `test_srt_lote.py`. O sistema consome diretamente a logica do `OrquestradorTraducoes` para bater as traducoes contra o cache local sem necessidade da interface grafica.
