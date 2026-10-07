@@ -6,6 +6,7 @@ import threading
 from .config import ConfigManager
 from .mkv_wrapper import MkvWrapper
 from .translator_service import TranslatorService
+from .idiomas import Idiomas
 
 
 class TranslationOrchestrator:
@@ -95,13 +96,30 @@ class TranslationOrchestrator:
         eh_mkv = origem.lower().endswith('.mkv')
 
         arquivo_trabalho = origem
+        # Idioma efetivo de origem: para MKV, vem da trilha realmente extraída
+        # (pode diferir da preferência global em caso de fallback).
+        idioma_real = idioma_origem
         if eh_mkv:
             if not ConfigManager.check_dependencies():
                 log("[AVISO] Processamento abortado. MKVToolNix não encontrado.")
                 return False
 
             log(f"[Etapa 1/3] Extração de Mídia via MKVToolNix (Idioma: {idioma_origem or 'Qualquer'})")
-            arquivo_trabalho = MkvWrapper.extrair_legenda(origem, destino_dir, idioma_origem, log)
+            arquivo_trabalho, idioma_real = MkvWrapper.extrair_legenda(origem, destino_dir, idioma_origem, log)
+
+        src_google = Idiomas.para_google(idioma_real)
+        if src_google == "auto":
+            log(f"[AVISO] Idioma de origem indefinido ('{idioma_real or 'auto'}'). Será usada a autodetecção do Google.")
+        else:
+            log(f"Idioma de origem: {idioma_real} (Google: {src_google})")
+
+        if src_google == idioma_destino.lower():
+            if eh_mkv:
+                log(f"-> Origem e destino são o mesmo idioma ({src_google}). Arquivo pulado.")
+                self._remover_temporario(arquivo_trabalho)
+                return False
+            log(f"[AVISO] O idioma selecionado ({src_google}) é igual ao destino. "
+                "Como o idioma de legendas avulsas não é verificado, a tradução prossegue.")
 
         nome_base = os.path.basename(arquivo_trabalho)
         extensao = nome_base.rsplit('.', 1)[-1]
@@ -123,17 +141,23 @@ class TranslationOrchestrator:
             progress_callback=update_progress, 
             is_cancelled_callback=lambda: not self._is_running
         )
-        asyncio.run(translator_svc.pipeline(arquivo_trabalho, caminho_final_legenda, idioma_origem, idioma_destino))
+        asyncio.run(translator_svc.pipeline(arquivo_trabalho, caminho_final_legenda, idioma_real, idioma_destino))
         
         if not self._is_running:
             return False
 
         # Multiplexação e limpeza (somente MKV)
         if eh_mkv:
-            self._muxar_e_limpar(origem, caminho_final_legenda, destino_dir,
+            self._muxar_e_limpar(origem, caminho_final_legenda, caminho_mkv_saida, idioma_destino,
                                   arquivo_trabalho, manter_legenda, log)
 
         return True
+
+    @staticmethod
+    def _remover_temporario(arquivo_trabalho):
+        """Remove a legenda extraída do MKV (arquivo '_ORIGINAL'), se existir."""
+        if os.path.exists(arquivo_trabalho) and "_ORIGINAL" in arquivo_trabalho:
+            os.remove(arquivo_trabalho)
 
     def _verificar_conflito(self, eh_mkv, caminho_legenda, caminho_mkv,
                               destino_dir, arquivo_trabalho, log, ask_overwrite):
@@ -167,11 +191,11 @@ class TranslationOrchestrator:
         log("Arquivo(s) antigo(s) removido(s). Prosseguindo...")
         return True
 
-    def _muxar_e_limpar(self, mkv_original, legenda_traduzida, destino_dir,
+    def _muxar_e_limpar(self, mkv_original, legenda_traduzida, caminho_mkv_saida, idioma_destino,
                           arquivo_trabalho, manter_legenda, log):
         """Embutir legenda no MKV e limpar arquivos temporários."""
         log("[Etapa 3/3] Multiplexação e Limpeza")
-        MkvWrapper.embutir_legenda(mkv_original, legenda_traduzida, destino_dir, log)
+        MkvWrapper.embutir_legenda(mkv_original, legenda_traduzida, caminho_mkv_saida, idioma_destino, log)
 
         try:
             if os.path.exists(arquivo_trabalho) and "_ORIGINAL" in arquivo_trabalho:

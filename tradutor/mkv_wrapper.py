@@ -3,6 +3,7 @@ import json
 import subprocess
 
 from .config import ConfigManager
+from .idiomas import Idiomas
 
 
 class MkvWrapper:
@@ -60,7 +61,8 @@ class MkvWrapper:
             logger: Callable para registrar mensagens de progresso.
 
         Returns:
-            Caminho do arquivo de legenda extraído.
+            Tupla (caminho do arquivo de legenda extraído, idioma real da trilha extraída).
+            O idioma real pode diferir do preferido quando ocorre fallback.
 
         Raises:
             RuntimeError: Se não conseguir ler o MKV.
@@ -79,10 +81,14 @@ class MkvWrapper:
         except Exception as e:
             raise RuntimeError(f"Erro ao ler MKV (Verifique dependências): {e}")
 
-        track_id, selected_ext = MkvWrapper._selecionar_trilha(info, idioma_preferido)
+        track_id, selected_ext, idioma_real = MkvWrapper._selecionar_trilha(info, idioma_preferido)
 
         if track_id is None:
             raise ValueError("Nenhuma legenda (.ass ou .srt) encontrada neste MKV.")
+
+        pref = (idioma_preferido or "").strip().lower()
+        if pref and pref != "auto" and pref != idioma_real:
+            logger(f"[AVISO] Idioma '{pref}' ausente neste vídeo; usando a faixa '{idioma_real}'.")
 
         nome_base = os.path.basename(caminho_mkv).rsplit('.', 1)[0]
         caminho_extraido = os.path.join(pasta_destino, f"{nome_base}_ORIGINAL{selected_ext}")
@@ -90,19 +96,23 @@ class MkvWrapper:
         logger("Extraindo trilha original para processamento...")
         comando_extrair = [mkvextract, "tracks", caminho_mkv, f"{track_id}:{caminho_extraido}"]
         subprocess.run(comando_extrair, check=True, capture_output=True)
-        return caminho_extraido
+        return caminho_extraido, idioma_real
 
     @staticmethod
     def _selecionar_trilha(info, idioma_preferido):
         """Seleciona a melhor trilha de legenda do MKV com base no idioma preferido.
 
         Returns:
-            Tupla (track_id, extensão) ou (None, None) se nenhuma for encontrada.
+            Tupla (track_id, extensão, idioma). Se nenhuma trilha suportada existir,
+            track_id é None.
+            O idioma é o da trilha efetivamente selecionada (ou 'und' se não marcado).
         """
         track_id = None
         fallback_track_id = None
         selected_ext = ".ass"
         fallback_ext = ".ass"
+        selected_lang = "und"
+        fallback_lang = "und"
 
         for track in info.get("tracks", []):
             if track.get("type") != "subtitles":
@@ -110,7 +120,7 @@ class MkvWrapper:
 
             codec = track.get("codec", "").lower()
             codec_id = track.get("properties", {}).get("codec_id", "").lower()
-            lang = track.get("properties", {}).get("language", "").lower()
+            lang = track.get("properties", {}).get("language", "und").lower() or "und"
 
             ext = MkvWrapper._detectar_formato(codec, codec_id)
             if ext is None:
@@ -119,21 +129,29 @@ class MkvWrapper:
             if fallback_track_id is None:
                 fallback_track_id = track["id"]
                 fallback_ext = ext
+                fallback_lang = lang
 
             if idioma_preferido and lang == idioma_preferido.lower():
                 track_id = track["id"]
                 selected_ext = ext
+                selected_lang = lang
                 break
 
         if track_id is None:
-            track_id = fallback_track_id
-            selected_ext = fallback_ext
+            return fallback_track_id, fallback_ext, fallback_lang
 
-        return track_id, selected_ext
+        return track_id, selected_ext, selected_lang
 
     @staticmethod
-    def embutir_legenda(caminho_mkv_original, caminho_legenda_traduzida, pasta_destino, logger):
+    def embutir_legenda(caminho_mkv_original, caminho_legenda_traduzida, caminho_saida, idioma_destino, logger):
         """Embutir legenda traduzida no MKV original, gerando um novo arquivo.
+
+        Args:
+            caminho_mkv_original: MKV de origem.
+            caminho_legenda_traduzida: Legenda já traduzida a ser embutida.
+            caminho_saida: Caminho completo do MKV de saída.
+            idioma_destino: Código do idioma de destino no padrão do Google (ex: 'pt', 'en').
+            logger: Callable para registrar mensagens de progresso.
 
         Returns:
             Caminho do arquivo MKV de saída.
@@ -142,16 +160,15 @@ class MkvWrapper:
             RuntimeError: Se o mkvmerge falhar.
         """
         mkvmerge, _ = ConfigManager.get_mkv_bins()
-        nome_saida = os.path.basename(caminho_mkv_original).rsplit('.', 1)[0] + "_PTBR.mkv"
-        caminho_saida = os.path.join(pasta_destino, nome_saida)
+        codigo_mkv, nome_trilha = Idiomas.destino_para_mkv(idioma_destino)
 
-        logger(f"Criando novo contêiner de vídeo ({nome_saida})...")
+        logger(f"Criando novo contêiner de vídeo ({os.path.basename(caminho_saida)})...")
         comando_mux = [
             mkvmerge,
             "-o", caminho_saida,
             caminho_mkv_original,
-            "--language", "0:por",
-            "--track-name", "0:Português (Brasil)",
+            "--language", f"0:{codigo_mkv}",
+            "--track-name", f"0:{nome_trilha}",
             caminho_legenda_traduzida
         ]
 

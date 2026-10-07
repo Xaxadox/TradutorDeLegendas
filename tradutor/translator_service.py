@@ -9,6 +9,7 @@ from googletrans import Translator
 
 from .config import ConfigManager
 from .glossary import GlossaryManager
+from .idiomas import Idiomas
 
 
 class TranslatorService:
@@ -51,15 +52,7 @@ class TranslatorService:
     @staticmethod
     def _map_lang(iso_639_2):
         """Mapeia os códigos de idioma do MKV para o Google Translate."""
-        if not iso_639_2 or iso_639_2 == "auto" or iso_639_2 == "und":
-            return "auto"
-        # Mapeamento dos mais comuns de 3 letras para 2 letras
-        mapa = {
-            "eng": "en", "fra": "fr", "fre": "fr", "jpn": "ja", 
-            "spa": "es", "ger": "de", "ita": "it", "por": "pt",
-            "rus": "ru", "chi": "zh-cn"
-        }
-        return mapa.get(iso_639_2.lower(), "auto")
+        return Idiomas.para_google(iso_639_2)
 
     async def _traduzir_lote(self, executor, semaforo, lote_indices, subs, pbar_lock, src_lang="auto", dest_lang="pt"):
         """Traduz um lote de linhas de legenda de forma assíncrona."""
