@@ -2,6 +2,7 @@
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Xaxadox/TradutorDeLegendas/tests.yml?style=flat-square&label=Testes%20CI)
 ![Python](https://img.shields.io/badge/Python-3.11%2B-blue?style=flat-square)
+![Licença](https://img.shields.io/badge/Licen%C3%A7a-MIT-green?style=flat-square)
 
 O **Taradutor de Legendas** é uma ferramenta de automação para extração, tradução e multiplexação de legendas em arquivos de vídeo MKV, bem como legendas avulsas nos formatos SRT e ASS. O sistema emprega processamento assíncrono para garantir alto desempenho, acompanhado por tolerância a falhas, cache persistente local e proteção de contexto via glossário dinâmico.
 
@@ -90,3 +91,9 @@ Validação de pipelines completos de lote em ambiente controlado:
 ```bash
 python tests/e2e/test_srt_lote.py
 ```
+
+---
+
+## Licença
+
+Este projeto está licenciado sob os termos da licença MIT. Para mais detalhes, consulte o arquivo [LICENSE](LICENSE).
