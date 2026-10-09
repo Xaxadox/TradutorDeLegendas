@@ -15,6 +15,14 @@ def rodar_teste():
     
     model = OrquestradorTraducoes()
     
+    # -- INJEÇÃO E2E (FASE 4) --
+    # Isola a API do Google para não gastar limites e rodar offline
+    from unittest.mock import patch
+    patcher = patch('tradutor.tradutores.google.MotorTraducaoGoogle.translate')
+    mock_translate = patcher.start()
+    mock_translate.side_effect = lambda text, src_lang, dest_lang: f"[MOCK] {text}"
+    # --------------------------
+    
     # Mockando a interface gráfica
     def mock_log(msg):
         print(f"[LOG] {msg}")

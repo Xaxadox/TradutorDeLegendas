@@ -1,0 +1,33 @@
+name: Testes Automatizados (CI)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Configurar Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+
+    - name: Instalar dependências
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Rodar Testes Unitários (Pytest)
+      run: |
+        pytest tests/unit/ -v
+
+    - name: Rodar Teste E2E (SRT em Lote Offline)
+      run: |
+        python tests/e2e/test_srt_lote.py

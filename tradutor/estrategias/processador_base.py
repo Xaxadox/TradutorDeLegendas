@@ -57,7 +57,8 @@ class ProcessadorArquivoBase(ABC):
             logger=self.log, 
             progress_callback=self.update_progress, 
             is_cancelled_callback=lambda: not self.is_running(),
-            engine=engine
+            engine=engine,
+            video_filename=os.path.basename(origem)
         )
         
         caminho_legenda_final = caminhos_saida['legenda']

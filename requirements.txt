@@ -4,3 +4,7 @@ customtkinter
 pysubs2
 deep-translator==1.11.4
 tkinterdnd2==0.6.3
+requests
+pytest>=8.0.0
+pytest-asyncio>=0.23.0
+pytest-mock>=3.14.0

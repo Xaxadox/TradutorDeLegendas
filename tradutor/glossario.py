@@ -9,13 +9,29 @@ class GerenciadorGlossario:
     e restaura os termos originais após a tradução, impedindo alucinações da API.
     """
     
-    def __init__(self, filepath="glossario.txt"):
+    def __init__(self, filepath="glossario.txt", video_filename=None):
         self.filepath = filepath
+        self.video_filename = video_filename
         self.glossario_map = {}
         self.load()
 
+    def _load_file(self, path):
+        try:
+            with open(path, 'r', encoding='utf-8') as f:
+                for line in f:
+                    line = line.strip()
+                    if not line or line.startswith('#'):
+                        continue
+                    if '=' in line:
+                        src, tgt = line.split('=', 1)
+                        self.glossario_map[src.strip()] = tgt.strip()
+                    else:
+                        self.glossario_map[line] = line
+        except Exception:
+            pass
+
     def load(self):
-        """Carrega os termos do arquivo de glossário."""
+        """Carrega os termos do arquivo de glossário global e específicos."""
         if not os.path.exists(self.filepath):
             # Cria um arquivo de exemplo se não existir
             try:
@@ -30,21 +46,44 @@ class GerenciadorGlossario:
                     f.write("# Goku\n")
             except Exception:
                 pass
-            return
-
-        try:
-            with open(self.filepath, 'r', encoding='utf-8') as f:
-                for line in f:
-                    line = line.strip()
-                    if not line or line.startswith('#'):
-                        continue
-                    if '=' in line:
-                        src, tgt = line.split('=', 1)
-                        self.glossario_map[src.strip()] = tgt.strip()
-                    else:
-                        self.glossario_map[line] = line
-        except Exception:
-            pass
+        else:
+            self._load_file(self.filepath)
+            
+        # Carrega dicionários específicos baseados no nome do vídeo
+        dir_especificos = "glossarios"
+        if not os.path.exists(dir_especificos):
+            try:
+                os.makedirs(dir_especificos)
+                with open(os.path.join(dir_especificos, 'LEIA_ME.txt'), 'w', encoding='utf-8') as f:
+                    f.write("Coloque aqui dicionários específicos de animes (ex: Bleach.txt, One Piece.txt).\n")
+                    f.write("Se o nome do vídeo que está sendo traduzido contiver o nome do arquivo, este dicionário será carregado automaticamente junto com o global.\n")
+            except Exception:
+                pass
+                
+        encontrou_especifico = False
+        if self.video_filename and os.path.exists(dir_especificos):
+            video_name_lower = self.video_filename.lower()
+            for arquivo in os.listdir(dir_especificos):
+                if arquivo.lower().endswith(".txt") and arquivo.lower() != "leia_me.txt":
+                    nome_anime = arquivo[:-4].lower() # remove .txt
+                    if nome_anime in video_name_lower:
+                        self._load_file(os.path.join(dir_especificos, arquivo))
+                        encontrou_especifico = True
+            
+            # Se não encontrou na pasta, roda o script extrator silenciosamente
+            if not encontrou_especifico:
+                try:
+                    import sys
+                    raiz_projeto = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                    if raiz_projeto not in sys.path:
+                        sys.path.insert(0, raiz_projeto)
+                    
+                    from alimentar_glossario import auto_alimentar
+                    novo_arquivo = auto_alimentar(self.video_filename)
+                    if novo_arquivo and os.path.exists(novo_arquivo):
+                        self._load_file(novo_arquivo)
+                except Exception as e:
+                    pass
 
     def apply_shield(self, text):
         """Aplica o escudo substituindo termos por tokens."""

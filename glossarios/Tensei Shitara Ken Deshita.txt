@@ -1,0 +1,8 @@
+# --- Tensei Shitara Ken Deshita (Reincarnated as a Sword) ---
+Fran
+Teacher=Mestre
+Shishou=Mestre
+Amanda
+Klimt
+Gallus
+

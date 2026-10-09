@@ -23,6 +23,13 @@ def rodar_teste_mkv(caminho_mkv, idioma_origem_menu="auto", idioma_destino="pt")
     
     model = OrquestradorTraducoes()
     
+    # -- INJEÇÃO E2E (FASE 4) --
+    from unittest.mock import patch
+    patcher = patch('tradutor.tradutores.google.MotorTraducaoGoogle.translate')
+    mock_translate = patcher.start()
+    mock_translate.side_effect = lambda text, src_lang, dest_lang: f"[MOCK] {text}"
+    # --------------------------
+    
     # Mockando a interface gráfica para ver os logs no console
     def mock_log(msg):
         print(f"[LOG] {msg}")

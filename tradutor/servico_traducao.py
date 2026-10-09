@@ -19,13 +19,13 @@ class ServicoTraducao:
     quando a API retorna quantidade inconsistente de linhas.
     """
 
-    def __init__(self, logger, progress_callback, is_cancelled_callback=None, engine=None):
+    def __init__(self, logger, progress_callback, is_cancelled_callback=None, engine=None, video_filename=None):
         self._logger = logger
         self._progress_callback = progress_callback
         self._is_cancelled = is_cancelled_callback or (lambda: False)
         self._linhas_processadas = 0
         self._total_linhas = 0
-        self._glossary = GerenciadorGlossario()
+        self._glossary = GerenciadorGlossario(video_filename=video_filename)
         self._cache = CacheTraducoes()
         
         if engine is None:

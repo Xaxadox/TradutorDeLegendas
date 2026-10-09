@@ -19,7 +19,7 @@ sensei
 onii-chan
 onee-chan
 
-# --- Energias, Magias e Conceitos ---
+# --- Energias, Magias e Conceitos Clássicos ---
 Jutsu
 Chakra
 Ki
@@ -60,6 +60,9 @@ Espada
 Arrancar
 Quincy
 Nakama=Companheiro
+Guilda
+Quest
+Dungeon
 
 # --- Lugares Clássicos ---
 Konoha
@@ -70,3 +73,8 @@ Wano
 Seireitei
 Gotei 13
 U.A.
+
+# ==============================================================================
+# TEMPORADA ATUAL E ESPECÍFICOS DO USUÁRIO
+# ==============================================================================
+

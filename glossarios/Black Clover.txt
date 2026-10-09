@@ -1,0 +1,9 @@
+# --- Black Clover ---
+Asta
+Yuno
+Noelle
+Yami
+Grimoire=Grimório
+Clover
+Spade
+
