@@ -12,6 +12,8 @@ class GerenciadorConfig:
     DIRETORIO_PROJETO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     LOCAL_MKVTOOLNIX = os.path.join(DIRETORIO_PROJETO, "mkvtoolnix")
     SYSTEM_MKVTOOLNIX = r"C:\Program Files\MKVToolNix"
+    ARQUIVO_GLOSSARIO_PADRAO = os.path.join(DIRETORIO_PROJETO, "glossario.txt")
+    DIRETORIO_GLOSSARIOS = os.path.join(DIRETORIO_PROJETO, "glossarios")
 
     @classmethod
     def get_mkvtoolnix_path(cls):

@@ -1,3 +1,4 @@
+import os
 import re
 import time
 import asyncio
@@ -84,10 +85,17 @@ class ServicoTraducao:
                 else:
                     self._logger("[Aviso] Dessincronia no lote. Executando fallback sequencial...")
                     for idx, texto in zip(lote_indices, textos_preparados):
+                        if self._is_cancelled():
+                            break
                         texto_protegido, map_seq = self._glossary.apply_shield(texto)
-                        r = await loop.run_in_executor(executor, self._engine.translate, texto_protegido, src_lang, dest_lang)
+                        r = self._cache.get(texto_protegido, src_lang, dest_lang)
+                        if not r:
+                            r = await loop.run_in_executor(executor, self._engine.translate, texto_protegido, src_lang, dest_lang)
+                            self._cache.put(texto_protegido, src_lang, dest_lang, r)
                         r_restaurado = self._glossary.remove_shield(r, map_seq)
                         subs[idx].text = self._limpar_quebras(r_restaurado)
+                        if self._is_cancelled():
+                            break
                         await asyncio.sleep(0.5)
             except Exception as e:
                 self._logger(f"[Erro Crítico] Lote ignorado. Motivo: {e}")
@@ -108,7 +116,7 @@ class ServicoTraducao:
         """
         src_lang = self._map_lang(idioma_preferido)
         
-        self._logger(f"Carregando legendas de {__import__('os').path.basename(origem)}...")
+        self._logger(f"Carregando legendas de {os.path.basename(origem)}...")
         try:
             subs = pysubs2.load(origem)
         except Exception as e:

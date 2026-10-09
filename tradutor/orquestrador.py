@@ -57,34 +57,36 @@ class OrquestradorTraducoes:
         log(f"INICIANDO PROCESSAMENTO EM LOTE: {total_arquivos} arquivo(s)")
         log("="*60)
 
-        for index, origem in enumerate(files, 1):
-            if not self._is_running:
-                break
+        try:
+            for index, origem in enumerate(files, 1):
+                if not self._is_running:
+                    break
 
-            try:
-                inicio_arquivo = time.time()
-                log(f"\n--- Arquivo [{index}/{total_arquivos}]: {os.path.basename(origem)} ---")
+                try:
+                    inicio_arquivo = time.time()
+                    log(f"\n--- Arquivo [{index}/{total_arquivos}]: {os.path.basename(origem)} ---")
 
-                # Devolvemos a responsabilidade de saber COMO processar para o Factory/Strategy
-                processador = FabricaProcessadores.get_processor(
-                    origem, log, update_progress, ask_overwrite, lambda: self._is_running
-                )
-                resultado = processador.process(origem, idioma_origem, idioma_destino, manter_legenda)
+                    # Devolvemos a responsabilidade de saber COMO processar para o Factory/Strategy
+                    processador = FabricaProcessadores.get_processor(
+                        origem, log, update_progress, ask_overwrite, lambda: self._is_running
+                    )
+                    resultado = processador.process(origem, idioma_origem, idioma_destino, manter_legenda)
 
-                if resultado:
-                    elapsed = int(time.time() - inicio_arquivo)
-                    log(f"-> Sucesso! Tempo gasto: {elapsed}s.")
-                    arquivos_sucesso += 1
+                    if resultado:
+                        elapsed = int(time.time() - inicio_arquivo)
+                        log(f"-> Sucesso! Tempo gasto: {elapsed}s.")
+                        arquivos_sucesso += 1
 
-            except Exception as e:
-                log(f"[ERRO CRÍTICO] Falha no arquivo {os.path.basename(origem)}: {e}")
-                continue
+                except Exception as e:
+                    log(f"[ERRO CRÍTICO] Falha no arquivo {os.path.basename(origem)}: {e}")
+                    continue
 
-        tempo_total_gasto = int(time.time() - tempo_total_inicio)
-        log("\n" + "="*60)
-        log("PROCESSAMENTO EM LOTE FINALIZADO")
-        log(f"Sucesso: {arquivos_sucesso} de {total_arquivos} arquivos.")
-        log(f"Tempo Total Gasto: {tempo_total_gasto}s")
-        log("="*60)
-
-        on_finish()
+            tempo_total_gasto = int(time.time() - tempo_total_inicio)
+            log("\n" + "="*60)
+            log("PROCESSAMENTO EM LOTE FINALIZADO")
+            log(f"Sucesso: {arquivos_sucesso} de {total_arquivos} arquivos.")
+            log(f"Tempo Total Gasto: {tempo_total_gasto}s")
+            log("="*60)
+        finally:
+            self._is_running = False
+            on_finish()

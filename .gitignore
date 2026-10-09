@@ -364,3 +364,7 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 docs/ideias_descartadas.md
+
+# Banco de dados SQLite local de cache de traducoes
+cache_traducoes.db
+*.db

@@ -1,11 +1,11 @@
 import os
 import sys
+import re
 
 try:
     import requests
 except ImportError:
-    print("O módulo 'requests' não está instalado. Por favor, instale usando: pip install requests")
-    sys.exit(1)
+    requests = None
 
 ANILIST_URL = "https://graphql.anilist.co"
 
@@ -25,8 +25,12 @@ def buscar_anime(nome):
     '''
     variables = {'search': nome}
     
+    if requests is None:
+        print("[AVISO] Módulo 'requests' indisponível para busca.")
+        return []
+
     try:
-        response = requests.post(ANILIST_URL, json={'query': query, 'variables': variables})
+        response = requests.post(ANILIST_URL, json={'query': query, 'variables': variables}, timeout=10)
         response.raise_for_status()
         data = response.json()
         return data['data']['Page']['media']
@@ -52,8 +56,12 @@ def buscar_personagens(anime_id):
     '''
     variables = {'id': anime_id}
     
+    if requests is None:
+        print("[AVISO] Módulo 'requests' indisponível para busca.")
+        return []
+
     try:
-        response = requests.post(ANILIST_URL, json={'query': query, 'variables': variables})
+        response = requests.post(ANILIST_URL, json={'query': query, 'variables': variables}, timeout=10)
         response.raise_for_status()
         data = response.json()
         return data['data']['Media']['characters']['nodes']
@@ -125,7 +133,8 @@ def main():
     # Ordena do nome mais longo para o mais curto (necessário para o replace não sobrepor nomes menores)
     lista_ordenada = sorted(list(lista_nomes), key=len, reverse=True)
     
-    pasta_glossarios = "glossarios"
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    pasta_glossarios = os.path.join(base_dir, "glossarios")
     os.makedirs(pasta_glossarios, exist_ok=True)
     
     caminho_arquivo = os.path.join(pasta_glossarios, f"{nome_arquivo}.txt")
@@ -140,7 +149,6 @@ def main():
             
     print(f"\n[SUCESSO] {len(lista_ordenada)} termos salvos em: {caminho_arquivo}")
 
-import re
 
 def limpar_nome_anime(nome_arquivo):
     """Limpa o nome do arquivo para encontrar o nome do anime real."""

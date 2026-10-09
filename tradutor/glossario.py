@@ -1,5 +1,6 @@
 import os
 import re
+from .config import GerenciadorConfig
 
 class GerenciadorGlossario:
     """Gerenciador do Dicionário Anti-Tradução (Glossário).
@@ -9,9 +10,10 @@ class GerenciadorGlossario:
     e restaura os termos originais após a tradução, impedindo alucinações da API.
     """
     
-    def __init__(self, filepath="glossario.txt", video_filename=None):
-        self.filepath = filepath
+    def __init__(self, filepath=None, video_filename=None, habilitar_auto_alimentar=False):
+        self.filepath = filepath or GerenciadorConfig.ARQUIVO_GLOSSARIO_PADRAO
         self.video_filename = video_filename
+        self.habilitar_auto_alimentar = habilitar_auto_alimentar
         self.glossario_map = {}
         self.load()
 
@@ -50,10 +52,10 @@ class GerenciadorGlossario:
             self._load_file(self.filepath)
             
         # Carrega dicionários específicos baseados no nome do vídeo
-        dir_especificos = "glossarios"
+        dir_especificos = GerenciadorConfig.DIRETORIO_GLOSSARIOS
         if not os.path.exists(dir_especificos):
             try:
-                os.makedirs(dir_especificos)
+                os.makedirs(dir_especificos, exist_ok=True)
                 with open(os.path.join(dir_especificos, 'LEIA_ME.txt'), 'w', encoding='utf-8') as f:
                     f.write("Coloque aqui dicionários específicos de animes (ex: Bleach.txt, One Piece.txt).\n")
                     f.write("Se o nome do vídeo que está sendo traduzido contiver o nome do arquivo, este dicionário será carregado automaticamente junto com o global.\n")
@@ -70,11 +72,11 @@ class GerenciadorGlossario:
                         self._load_file(os.path.join(dir_especificos, arquivo))
                         encontrou_especifico = True
             
-            # Se não encontrou na pasta, roda o script extrator silenciosamente
-            if not encontrou_especifico:
+            # Se não encontrou na pasta e a busca automática estiver ativada, roda o extrator
+            if not encontrou_especifico and self.habilitar_auto_alimentar:
                 try:
                     import sys
-                    raiz_projeto = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+                    raiz_projeto = GerenciadorConfig.DIRETORIO_PROJETO
                     if raiz_projeto not in sys.path:
                         sys.path.insert(0, raiz_projeto)
                     
@@ -82,7 +84,7 @@ class GerenciadorGlossario:
                     novo_arquivo = auto_alimentar(self.video_filename)
                     if novo_arquivo and os.path.exists(novo_arquivo):
                         self._load_file(novo_arquivo)
-                except Exception as e:
+                except Exception:
                     pass
 
     def apply_shield(self, text):
@@ -122,7 +124,7 @@ class GerenciadorGlossario:
             # Essa regex captura se o Google tentar quebrar, minuscular ou espaçar o token.
             num = token[7:-1]
             pattern = re.compile(r'(?i)\bT\s*K\s*G\s*L\s*O\s*S\s*S\s*' + str(num) + r'\s*T\b')
-            final_text = pattern.sub(tgt, final_text)
+            final_text = pattern.sub(lambda _: tgt, final_text)
             
         # Limpa espaços duplos que possam ter sido injetados
         final_text = re.sub(r' +', ' ', final_text).strip()

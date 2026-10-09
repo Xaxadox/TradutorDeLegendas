@@ -10,9 +10,9 @@ if not exist venv\ (
     exit /b
 )
 
-echo [INFO] Ativando VENV e rodando script de testes...
+echo [INFO] Ativando VENV e rodando testes unitarios com pytest...
 call venv\Scripts\activate
-python tests\teste_integracao.py
+pytest tests\unit -v
 
 echo.
 echo ===================================================

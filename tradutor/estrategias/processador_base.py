@@ -50,26 +50,30 @@ class ProcessadorArquivoBase(ABC):
         if not self._check_conflicts(caminhos_saida, arq_trabalho):
             return False
 
-        # 5. Tradução (Core)
-        self.log(self.get_translation_message())
-        engine = MotorTraducaoGoogle(max_retries=GerenciadorConfig.MAX_RETENTATIVAS)
-        translator_svc = ServicoTraducao(
-            logger=self.log, 
-            progress_callback=self.update_progress, 
-            is_cancelled_callback=lambda: not self.is_running(),
-            engine=engine,
-            video_filename=os.path.basename(origem)
-        )
-        
-        caminho_legenda_final = caminhos_saida['legenda']
-        asyncio.run(translator_svc.pipeline(arq_trabalho, caminho_legenda_final, idioma_real, idioma_destino))
-        
-        if not self.is_running():
-            return False
+        try:
+            # 5. Tradução (Core)
+            self.log(self.get_translation_message())
+            engine = MotorTraducaoGoogle(max_retries=GerenciadorConfig.MAX_RETENTATIVAS)
+            translator_svc = ServicoTraducao(
+                logger=self.log, 
+                progress_callback=self.update_progress, 
+                is_cancelled_callback=lambda: not self.is_running(),
+                engine=engine,
+                video_filename=os.path.basename(origem)
+            )
+            
+            caminho_legenda_final = caminhos_saida['legenda']
+            asyncio.run(translator_svc.pipeline(arq_trabalho, caminho_legenda_final, idioma_real, idioma_destino))
+            
+            if not self.is_running():
+                return False
 
-        # 6. Finalização Específica (Muxing MKV ou Bypass SRT)
-        self.finalize(origem, caminho_legenda_final, caminhos_saida, idioma_destino, arq_trabalho, manter_legenda)
-        return True
+            # 6. Finalização Específica (Muxing MKV ou Bypass SRT)
+            self.finalize(origem, caminho_legenda_final, caminhos_saida, idioma_destino, arq_trabalho, manter_legenda)
+            return True
+        finally:
+            if not self.is_running():
+                self.cleanup_temporary(arq_trabalho)
 
     def _check_conflicts(self, caminhos_saida, arq_trabalho) -> bool:
         """Lógica comum para perguntar ao usuário sobre arquivos existentes."""

@@ -81,7 +81,8 @@ class ManipuladorMkv:
         try:
             resultado = subprocess.run(
                 comando_info, capture_output=True, text=True,
-                check=True, encoding='utf-8', errors='ignore'
+                check=True, encoding='utf-8', errors='ignore',
+                creationflags=subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0
             )
             info = json.loads(resultado.stdout)
         except Exception as e:
@@ -101,7 +102,14 @@ class ManipuladorMkv:
 
         logger("Extraindo trilha original para processamento...")
         comando_extrair = [mkvextract, "tracks", caminho_mkv, f"{track_id}:{caminho_extraido}"]
-        subprocess.run(comando_extrair, check=True, capture_output=True)
+        resultado_extrair = subprocess.run(
+            comando_extrair, check=False, capture_output=True, text=True,
+            encoding='utf-8', errors='ignore',
+            creationflags=subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0
+        )
+        if resultado_extrair.returncode not in (0, 1):
+            erro_msg = resultado_extrair.stderr.strip() or f"Código de saída {resultado_extrair.returncode}"
+            raise RuntimeError(f"Erro ao extrair trilha do MKV: {erro_msg}")
         return caminho_extraido, idioma_real
 
     @staticmethod
@@ -179,7 +187,18 @@ class ManipuladorMkv:
         ]
 
         try:
-            subprocess.run(comando_mux, check=True, capture_output=True)
+            resultado_mux = subprocess.run(
+                comando_mux, check=False, capture_output=True, text=True,
+                encoding='utf-8', errors='ignore',
+                creationflags=subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0
+            )
+            if resultado_mux.returncode not in (0, 1):
+                erro_detalhe = resultado_mux.stderr.strip() or f"Código de saída {resultado_mux.returncode}"
+                raise RuntimeError(f"Erro ao embutir a legenda traduzida no MKV final: {erro_detalhe}")
+            if resultado_mux.returncode == 1:
+                logger("[AVISO] mkvmerge concluiu a multiplexação com alertas (warnings).")
             return caminho_saida
         except Exception as e:
-            raise RuntimeError(f"Erro ao embutir a legenda traduzida no MKV final: {e}")
+            if isinstance(e, RuntimeError):
+                raise
+            raise RuntimeError(f"Erro ao executar mkvmerge: {e}")

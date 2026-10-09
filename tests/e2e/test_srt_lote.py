@@ -16,11 +16,14 @@ def rodar_teste():
     model = OrquestradorTraducoes()
     
     # -- INJEÇÃO E2E (FASE 4) --
-    # Isola a API do Google para não gastar limites e rodar offline
+    # Isola a API do Google e a API AniList para não gastar limites e rodar 100% offline
     from unittest.mock import patch
     patcher = patch('tradutor.tradutores.google.MotorTraducaoGoogle.translate')
     mock_translate = patcher.start()
     mock_translate.side_effect = lambda text, src_lang, dest_lang: f"[MOCK] {text}"
+
+    patcher_anilist = patch('alimentar_glossario.auto_alimentar', return_value=None)
+    patcher_anilist.start()
     # --------------------------
     
     # Mockando a interface gráfica
@@ -49,18 +52,25 @@ def rodar_teste():
     diretorio_teste = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     diretorio_legendas = os.path.join(diretorio_teste, "data", "legendas")
     
-    arquivos = [f for f in os.listdir(diretorio_legendas) if f.endswith('.srt') and not f.endswith('_PTBR.srt')]
+    import re
+    # Filtra apenas os arquivos originais (sem sufixos de idioma de destino)
+    arquivos = [
+        f for f in os.listdir(diretorio_legendas)
+        if f.endswith('.srt') and not re.search(r'_[A-Za-z].*\.srt$', f)
+    ]
     
     if not arquivos:
         print("[AVISO] Nenhuma legenda original encontrada na pasta 'legendas'.")
         return
 
     relatorio_geral = {}
+    arquivos_gerados = []
     
     for arquivo in arquivos:
         origem = os.path.join(diretorio_legendas, arquivo)
         nome_base = arquivo.rsplit('.', 1)[0]
-        destino = os.path.join(diretorio_legendas, f"{nome_base}_PTBR.srt")
+        destino = os.path.join(diretorio_legendas, f"{nome_base}_PT.srt")
+        arquivos_gerados.append(destino)
         
         # O nome do arquivo agora diz o idioma (ex: Russo.srt, Chines.srt).
         # Vamos mapear o nome pro código do idioma preferido esperado pelo backend.
